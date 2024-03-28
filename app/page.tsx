@@ -1,113 +1,172 @@
+import { Badge, BadgeProps } from "@/components/Badge";
+import { Card } from "@/components/Card";
+import Typography, { TypographyLink } from "@/components/Typography";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
+import { ComponentPropsWithoutRef } from "react";
+import IconStar from '@/icons/star.svg'
+import { PromoSection } from "./PromoSection";
+import { AboutSection } from "./AboutSection";
+import { SectionHeading } from "./SectionHeading";
+
+const ContactsBadge: React.FC<{ href: string, children: React.ReactNode }> = ({ href, children }) =>
+  <Badge as={Link} href={href} size="large" className="sm:min-w-[200px] max-w-52 text-background flex justify-between">
+    <span>{children}</span>
+    <span>→</span>
+  </Badge>
+
+const Contacts = () => {
+  return <nav className="flex flex-col justify-between mt-10 lg:grid lg:grid-cols-12 gap-3">
+    <div className="flex flex-col gap-3 col-start-1 col-end-3">
+      <ContactsBadge href="#">
+        Behance
+      </ContactsBadge>
+      <ContactsBadge href="#">
+        Dribbble
+      </ContactsBadge>
+    </div>
+    <div className="flex flex-col gap-3 col-start-4 col-end-6">
+      <ContactsBadge href="#">
+        Хабр карьера
+      </ContactsBadge>
+      <ContactsBadge href="#">
+        hh.ru
+      </ContactsBadge>
+    </div>
+    <div className="flex flex-col gap-3 col-start-7 col-end-9">
+      <ContactsBadge href="#">
+        Telegram
+      </ContactsBadge>
+      <ContactsBadge href="#">
+        Email
+      </ContactsBadge>
+    </div>
+    <div className="flex flex-col gap-3 col-start-10 col-end-12">
+      <ContactsBadge href="#">
+        Резюме
+      </ContactsBadge>
+    </div>
+  </nav>
+}
+
+const Footer: React.FC<ComponentPropsWithoutRef<'footer'>> = ({ className, ...props }) => (
+  <footer className={cn("flex flex-col gap-3 py-6", className)} {...props}>
+    <Typography size="title4" family="mak" className="text-background font-bold">@rina</Typography>
+    <div className="flex justify-between items-center">
+      <Typography size="body2" className="text-background">
+        Designed with ❤️ by me. Developed by <Typography as={Link} href="https://zhenya.dev/" target="_blank" className="text-background font-bold">Zhenya</Typography>.
+      </Typography>
+      <Typography size="body2" className="text-background">
+        © Кученкова Арина, 2024
+      </Typography>
+    </div>
+  </footer>
+)
+
+const ContactsSection = () => {
+  return (
+    <section className="bg-brown pt-24 text-background footer">
+      <div className="container">
+        <Typography family="mak" size="title1" className="font-bold">КОНТАКТЫ</Typography>
+        <Typography className="block mt-14 max-w-xl">
+          Связаться со мной можно по почте kuchenkova.av@yandex.ru или через любой социальный профиль, указанный ниже.
+        </Typography>
+        <Contacts />
+        <Footer className="mt-44 text-background" />
+      </div>
+    </section>
+  )
+}
+
+const PortfolioSection = () =>
+  <section className="container">
+    <Typography family="mak" className="font-full-width font-bold ">Portfolio</Typography>
+  </section>
+
+const SectionItems = ({ items }) => {
+  return (
+    <div className="flex flex-wrap items-center gap-1">
+      {items.map(i => <Badge size="large" key={i} className="flex gap-1" style={{ borderColor: 'rgba(37, 29, 21, 0.12)' }}>
+        <IconStar className="size-5" /> <Typography className="text-body1">{i}</Typography>
+      </Badge>)}
+    </div>
+  )
+}
+
+
+const SoftSection = () =>
+  <section className="container mt-24">
+    <SectionHeading>
+      РАБОЧИЙ СОФТ
+    </SectionHeading>
+    <div className="flex flex-col gap-3 soft-wrapper lg:grid lg:grid-cols-4 lg:grid-flow-col lg:gap-5">
+      <Card className="col-span-2 row-span-2 row-start-1 bg-[#E0D5CA]">
+        <Typography className="text-title2 text-brown font-mak mb-3">
+          Figma
+        </Typography>
+        <SectionItems items={[
+          "Системы компонентов",
+          "Создание интерфейсов",
+          "Разработка пользовательских сценариев",
+          "Проработка адаптивного дизайна",
+          "Анимации",
+          "Прототипирование",
+          "Создание изображений",
+          "Работа с векторными фигурами",
+          "Отрисовка иконок",
+          "Создание презентаций",
+          "Подготовка макетов к вёрстке"
+        ]} />
+      </Card>
+      <Card className="col-span-1 row-start-1 bg-beige">
+        <Typography className="text-title2 text-brown font-mak mb-3">
+          Adobe Illustrator
+        </Typography>
+        <SectionItems items={[
+          "Векторные объекты",
+          "Логотипы",
+          "Иллюстрации"
+        ]} />
+      </Card>
+      <Card className="col-span-1 row-start-1 bg-[#CFDCE7]">
+        <Typography className="text-title2 text-brown font-mak mb-3">
+          Adobe Photoshop
+        </Typography>
+        <SectionItems items={[
+          "Растровые объекты",
+          "Обработка фото",
+          "Иллюстрации"
+        ]} />
+      </Card>
+      <Card className="col-span-2 col-start-3 row-start-2 bg-peach">
+        <Typography className="text-title2 text-brown font-mak mb-3">
+          Вспомогательный софт
+        </Typography>
+        <div>
+          <Typography>
+            <b>Framer</b> – конструктор для создания сайтов
+          </Typography>
+          <Typography>
+            <b>Stripo</b> – вёрстка писем для email-рассылок
+          </Typography>
+          <Typography>
+            <b>Miro</b> – разработка структуры проекта, работа с вайрфреймами
+          </Typography>
+        </div>
+      </Card>
+    </div>
+  </section>
+
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <>
+      <PromoSection />
+      <AboutSection />
+      <SoftSection />
+      <PortfolioSection />
+      <ContactsSection />
+    </>
   );
 }

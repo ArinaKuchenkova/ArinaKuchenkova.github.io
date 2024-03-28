@@ -1,0 +1,4 @@
+.icon::before {
+  width: 0;
+  content: "\00a0";
+}

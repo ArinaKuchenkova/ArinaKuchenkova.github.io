@@ -2,32 +2,87 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 20px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+:root {
+  --color-peach: #f4dfc9;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  @apply bg-background text-foreground text-body1 font-evolventa;
+}
+
+.container {
+  @apply w-full mx-auto px-4;
+  max-width: calc(1180px + 2rem);
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+p + p {
+  margin-top: 16px;
+}
+
+.footer {
+  background-image: url("/golden-ratio.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto cover;
+}
+
+.font-size-inherit {
+  font-size: inherit;
+}
+
+.font-full-width::after {
+  content: "";
+  display: inline-block;
+  width: 100%;
+}
+
+.soft-wrapper > div {
+  position: relative;
+}
+
+.soft-wrapper > div:nth-child(1)::after {
+  @apply w-5 hidden lg:block;
+
+  --line-color: var(--color-peach);
+  --pattern-size: 8px;
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 0;
+  height: 100%;
+
+  background: linear-gradient(
+    135deg,
+    var(--line-color) 10%,
+    #0000 0,
+    #0000 50%,
+    var(--line-color) 0,
+    var(--line-color) 60%,
+    #0000 0,
+    #0000
+  );
+  background-size: var(--pattern-size) var(--pattern-size);
+}
+
+.soft-wrapper > div:nth-child(1)::before {
+  @apply text-peach text-body2 w-5 h-[30px] hidden lg:flex justify-center;
+
+  background-image: url("/arrows.svg");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  content: "20";
+  position: absolute;
+  left: 100%;
+  top: -38px;
 }
