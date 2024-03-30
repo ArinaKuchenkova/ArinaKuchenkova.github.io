@@ -9,6 +9,7 @@ import IconStar from '@/icons/star.svg'
 import { PromoSection } from "./PromoSection";
 import { AboutSection } from "./AboutSection";
 import { SectionHeading } from "./SectionHeading";
+import { PortfolioSection } from "./PortfolioSection";
 
 const ContactsBadge: React.FC<{ href: string, children: React.ReactNode }> = ({ href, children }) =>
   <Badge as={Link} href={href} size="large" className="sm:min-w-[200px] max-w-52 text-background flex justify-between">
@@ -79,11 +80,6 @@ const ContactsSection = () => {
   )
 }
 
-const PortfolioSection = () =>
-  <section className="container">
-    <Typography family="mak" className="font-full-width font-bold ">Portfolio</Typography>
-  </section>
-
 const SectionItems = ({ items }) => {
   return (
     <div className="flex flex-wrap items-center gap-1">
@@ -93,7 +89,6 @@ const SectionItems = ({ items }) => {
     </div>
   )
 }
-
 
 const SoftSection = () =>
   <section className="container mt-24">
@@ -158,6 +153,51 @@ const SoftSection = () =>
     </div>
   </section>
 
+const ExperienceSection = () =>
+  <section className="container mt-24">
+
+    <SectionHeading>
+      ОПЫТ РАБОТЫ
+    </SectionHeading>
+
+    <div className="grid grid-cols-12 grid-flow-col gap-5">
+      <div className="col-start-2 col-end-12">
+        <div className="flex gap-10">
+          <div className="shrink-0">
+            <Badge className="text-brown">2022–2024</Badge>
+          </div>
+          <div className="flex flex-col gap-4">
+            <Typography size="title2" className="font-mak font-bold text-brown">
+              Human
+            </Typography>
+            <Typography as="span" className="m-0">
+              Работа в небольшом стартапе, тесное взаимодействие как с руководителем проекта
+              (по вопросам UI/UX), так и с командой разработчиков.
+              За это время было проделано много разношёрстной работы — от редизайна
+              текущих страниц до разработки и проектирования новых пользовательских фич.
+            </Typography>
+          </div>
+        </div>
+
+        <div className="flex gap-10">
+          <div className="shrink-0">
+            <Badge className="text-brown">2022–2024</Badge>
+          </div>
+          <div className="flex flex-col gap-4">
+            <Typography size="title2" className="font-mak font-bold text-brown">
+              Human
+            </Typography>
+            <Typography as="span" className="m-0">
+              Работа в небольшом стартапе, тесное взаимодействие как с руководителем проекта
+              (по вопросам UI/UX), так и с командой разработчиков.
+              За это время было проделано много разношёрстной работы — от редизайна
+              текущих страниц до разработки и проектирования новых пользовательских фич.
+            </Typography>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
 export default function Home() {
   return (
@@ -165,6 +205,7 @@ export default function Home() {
       <PromoSection />
       <AboutSection />
       <SoftSection />
+      <ExperienceSection />
       <PortfolioSection />
       <ContactsSection />
     </>
