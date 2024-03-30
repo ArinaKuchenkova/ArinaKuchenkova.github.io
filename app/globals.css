@@ -26,7 +26,7 @@ body {
   }
 }
 
-p + p {
+p+p {
   margin-top: 16px;
 }
 
@@ -47,11 +47,11 @@ p + p {
   width: 100%;
 }
 
-.soft-wrapper > div {
+.soft-wrapper>div {
   position: relative;
 }
 
-.soft-wrapper > div:nth-child(1)::after {
+.soft-wrapper>div:nth-child(1)::after {
   @apply w-5 hidden lg:block;
 
   --line-color: var(--color-peach);
@@ -62,20 +62,18 @@ p + p {
   top: 0;
   height: 100%;
 
-  background: linear-gradient(
-    135deg,
-    var(--line-color) 10%,
-    #0000 0,
-    #0000 50%,
-    var(--line-color) 0,
-    var(--line-color) 60%,
-    #0000 0,
-    #0000
-  );
+  background: linear-gradient(135deg,
+      var(--line-color) 10%,
+      #0000 0,
+      #0000 50%,
+      var(--line-color) 0,
+      var(--line-color) 60%,
+      #0000 0,
+      #0000);
   background-size: var(--pattern-size) var(--pattern-size);
 }
 
-.soft-wrapper > div:nth-child(1)::before {
+.soft-wrapper>div:nth-child(1)::before {
   @apply text-peach text-body2 w-5 h-[30px] hidden lg:flex justify-center;
 
   background-image: url("/arrows.svg");
@@ -85,4 +83,21 @@ p + p {
   position: absolute;
   left: 100%;
   top: -38px;
+}
+
+
+.promo-wrapper {
+  @apply border-t border-peach;
+
+  padding-bottom: 1px;
+  --bgSize: 77px;
+  --color: theme(colors.peach);
+  --bg: theme(colors.background);
+  background: var(--bg);
+  background-size: 1px var(--bgSize);
+  background-image: repeating-linear-gradient(0deg, var(--color), var(--color) 1px, var(--bg) 1px, var(--bg));
+
+  @media screen(md) {
+    --bgSize: 161px;
+  }
 }
