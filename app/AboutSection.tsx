@@ -1,11 +1,16 @@
 import Typography from "@/components/Typography"
 import { cn } from "@/lib/utils"
 import { SectionHeading } from "./SectionHeading"
-import styles from './AboutSection.module.css';
 import { Card } from "@/components/Card";
 import { WidthInfo } from "@/components/WidthInfo/WidthInfo";
+import { ComponentPropsWithoutRef } from "react";
 
-const AboutItem = ({ title, subtitle, className }) => (
+type AboutItemProps = ComponentPropsWithoutRef<'div'> & {
+  title: React.ReactNode,
+  subtitle: React.ReactNode,
+}
+
+const AboutItem: React.FC<AboutItemProps> = ({ title, subtitle, className }) => (
   <div className={cn(className, "px-6 py-3 md:px-10 md:py-5 rounded-full ring-1 ring-peach text-brown flex flex-col md:gap-1")}>
     <Typography as="span" className="text-title2 font-mak font-bold leading-tight">
       {title}

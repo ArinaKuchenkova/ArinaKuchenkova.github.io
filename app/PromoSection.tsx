@@ -5,6 +5,7 @@ import PhotoshopLogo from '@/icons/photoshop.svg';
 import { Button } from "@/components/ui/button";
 import Typography from '@/components/Typography';
 import { useScroll, animated } from 'react-spring';
+import Link from 'next/link';
 
 export const PromoSection = () => {
   const { scrollYProgress } = useScroll({
@@ -17,7 +18,7 @@ export const PromoSection = () => {
     },
   })
 
-  return <div className="flex flex-col promo-wrapper ">
+  return <section className="flex flex-col promo-wrapper ">
     <div className='container grid grid-cols-12 auto-rows-[76px] md:auto-rows-[160px] grid-flow-col gap-x-1 gap-y-[1px] md:gap-x-5 items-center'>
       <Typography
         style={{
@@ -75,8 +76,12 @@ export const PromoSection = () => {
       </Typography>
       <div className="col-start-1 col-end-13 rounded-full h-full md:ring-1 ring-peach flex items-center justify-center gap-2">
         <Button>Связаться</Button>
-        <Button variant="link">Резюме →</Button>
+        <Button variant="link" asChild>
+          <Link href="/resume">
+            Резюме →
+          </Link>
+        </Button>
       </div>
     </div>
-  </div>
+  </section>
 }
