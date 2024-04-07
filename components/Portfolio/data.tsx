@@ -124,7 +124,7 @@ export const data = [
     </>,
   },
   {
-    name: 'Мой сайт-портфолио (bulochka)',
+    name: 'Мой сайт-портфолио',
     description: 'TODO',
     type: PortfolioType.site,
     headerImages: [
