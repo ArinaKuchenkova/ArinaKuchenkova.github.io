@@ -2,6 +2,7 @@ import React from "react"
 import { List, ListItem } from "../List/List"
 
 export enum PortfolioType {
+  all = 'all',
   product = 'product',
   site = 'site',
   landing = 'landing',

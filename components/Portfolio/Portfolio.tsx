@@ -95,6 +95,7 @@ const PortfolioModal: React.FC<PortfolioModalProps> = ({ open, title, headerImag
 }
 
 const PortfolioTypeToGalleryGridType: Record<PortfolioType, GalleryGridType> = {
+  [PortfolioType.all]: GalleryGridType.hero,
   [PortfolioType.landing]: GalleryGridType.hero,
   [PortfolioType.creative]: GalleryGridType.normal,
   [PortfolioType.product]: GalleryGridType.hero,
@@ -251,7 +252,7 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({
   </>
 }
 
-export const Portfolio = ({ data }) => {
+export const Portfolio: React.FC<{ data: any[] }> = ({ data }) => {
   return <div className='mt-10'>
     {data.map(item =>
       <PortfolioItem
