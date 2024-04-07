@@ -7,7 +7,6 @@ export type BadgeProps = {
   children?: React.ReactNode;
   className?: string;
   size?: 'normal' | 'large';
-  // postfix?: React.ReactNode;
 }
 
 export const Badge = <T extends ElementType = 'span'>({ children, size, as, postfix, className, ...props }: DynamicHTMLProps<BadgeProps, T>) => {
@@ -16,11 +15,9 @@ export const Badge = <T extends ElementType = 'span'>({ children, size, as, post
   return (
     <Tag className={cn(badgeClasses({ size, withPostfix: !!postfix }), className)} {...props}>
       {children}
-      {/* {postfix && <span>{postfix}</span>} */}
     </Tag>
   )
 }
-
 
 const badgeClasses = cva(["flex items-center border border-peach"], {
   variants: {
