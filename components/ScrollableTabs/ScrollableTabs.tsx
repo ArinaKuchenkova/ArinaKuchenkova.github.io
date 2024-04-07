@@ -24,10 +24,13 @@ export const ScrollableTabs = <T extends string,>({ items, activeTab, onChange, 
 
   useEffect(() => {
     const active = itemsRefs.current.find(i => i.getAttribute('data-key') === activeTab);
-    active?.scrollIntoView({
-      behavior: 'smooth',
-      inline: 'center',
-      block: 'nearest'
+    const rect = active?.getBoundingClientRect();
+    if (!rect) {
+      return
+    }
+    wrapperRef.current?.scrollTo({
+      left: rect.left - 16,
+      behavior: 'smooth'
     })
     console.log(active);
   }, [activeTab])
