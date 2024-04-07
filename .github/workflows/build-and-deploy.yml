@@ -30,7 +30,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run build
-        run: npm run build && touch ./out/.nojekyll # && echo 'arina.pw' > ./out/CNAME
+        run: npm run build && touch ./out/.nojekyll && echo 'arina.pw' > ./out/CNAME
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
