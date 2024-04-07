@@ -1,23 +1,54 @@
 "use client";
 import React, { Ref, RefObject, useEffect, useRef, useState } from 'react';
-import { useScroll, animated, useSpringRef, useTransition, useChain, useSpring, config } from 'react-spring';
-import { useHover } from 'usehooks-ts'
+import { useScroll, animated, useSpringRef, useTransition, useChain, useSpring, config, useTrail } from 'react-spring';
+import { useHover, useScrollLock } from 'usehooks-ts'
 import styles from './Portfolio.module.css';
 import useMeasure from 'react-use-measure';
-import { data } from './data';
+import { PortfolioType, data } from './data';
+import { AnimatedHeading } from './AnimatedHeading';
+import { cn } from '@/lib/utils';
+import Typography from '../Typography';
+import { Button } from '../ui/button';
+import IconClose from '@/icons/close.svg';
 
 type PortfolioItemProps = {
-  images: string[]
+  type: PortfolioType;
+  name: string;
+  task: React.ReactNode;
+  implementation: React.ReactNode;
+  headerImages: string[];
+  modalImages: string[];
 }
 
-type GalleryProps = {
+type PortfolioModalProps = {
+  title: React.ReactNode;
   open?: boolean;
-  data: any[]
+  task: React.ReactNode;
+  implementation: React.ReactNode;
+  headerImages: string[];
+  images: string[];
+  gridType: GalleryGridType;
 }
 
-const Gallery: React.FC<GalleryProps> = ({ open, data }) => {
+enum GalleryGridType {
+  hero = 'hero',
+  normal = 'normal',
+  same = 'same'
+}
+
+const Gallery: React.FC<{ images: string[], gridType: GalleryGridType }> = ({ images = [], gridType = GalleryGridType.normal }) => {
+  return <div className={cn("grid grid-cols-4 gap-5", styles.gallery, {
+    [styles.hero]: gridType === GalleryGridType.hero,
+    [styles.normal]: gridType === GalleryGridType.normal,
+    [styles.same]: gridType === GalleryGridType.same,
+  })}>
+    {images.map(src => <img src={src} key={src} className="rounded-lg w-full h-full object-cover" />)}
+  </div>
+}
+
+const PortfolioModal: React.FC<PortfolioModalProps> = ({ open, title, headerImages, images, task, implementation, gridType }) => {
   const transApi = useSpringRef()
-  const transition = useTransition(open ? data : [], {
+  const transition = useTransition(open ? headerImages : [], {
     ref: transApi,
     trail: 400 / data.length,
     from: { opacity: 0, scale: 0 },
@@ -25,34 +56,77 @@ const Gallery: React.FC<GalleryProps> = ({ open, data }) => {
     leave: { opacity: 0, scale: 0 },
   })
 
-  useChain([transApi], [
-    0,
-    open ? 0.1 : 0.6,
-  ])
+  useChain([transApi], [open ? 0.1 : 0])
 
-  return <div className={styles.container}>
-    {transition((style, item) => (
-      <animated.div
-        className={styles.item}
-        style={{ ...style, background: item.css }}
-      />
-    ))}
+  return <div className={cn("")}>
+    <Typography className={cn('container text-title2 text-brown font-bold text-center mb-5 sm:mb-9 transition-opacity', {
+      "opacity-1": open,
+      "opacity-0": !open
+    })}>{title}</Typography>
+    <div className="container grid grid-cols-12 grid-flow-col gap-5">
+      <div className="col-start-2 col-end-12">
+        <div className='grid grid-cols-4 gap-5'>
+          {transition((style, src) => (
+            <animated.img
+              className="aspect-square bg-white rounded-lg"
+              style={style}
+              src={src}
+            />
+          ))}
+        </div>
+        <div className='grid grid-cols-2 gap-5 mt-10 mb-10'>
+          {task && <div>
+            <Typography className='text-title4 text-brown font-bold'>
+              Задача
+            </Typography>
+            {task}
+          </div>}
+          {implementation && <div>
+            <Typography className='text-title4 text-brown font-bold'>
+              Реализация
+            </Typography>
+            {implementation}
+          </div>}
+        </div>
+        <Gallery gridType={gridType} images={images} />
+      </div>
+    </div>
   </div>
 }
 
-const PortfolioItem: React.FC<PortfolioItemProps> = ({ images }) => {
+const PortfolioTypeToGalleryGridType: Record<PortfolioType, GalleryGridType> = {
+  [PortfolioType.landing]: GalleryGridType.hero,
+  [PortfolioType.creative]: GalleryGridType.normal,
+  [PortfolioType.product]: GalleryGridType.hero,
+  [PortfolioType.site]: GalleryGridType.hero,
+  [PortfolioType.illustration]: GalleryGridType.normal
+}
+
+
+const PortfolioItem: React.FC<PortfolioItemProps> = ({
+  modalImages,
+  headerImages,
+  name,
+  implementation,
+  task,
+  type
+}) => {
   const [wrapperRef, wrapperSize] = useMeasure({ scroll: true });
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   const isHover = useHover(ref);
   const transApi = useSpringRef()
   const [open, setOpen] = useState(false);
+  const { lock, unlock } = useScrollLock({
+    autoLock: false
+  });
 
-  const animatedImages = useTransition(isHover ? images : [], {
+  const animatedImages = useTransition(isHover ? headerImages : [], {
     ref: transApi,
-    trail: 200 / images.length,
+    trail: 200 / modalImages.length,
     from: { opacity: 0, scale: 0, },
     enter: { opacity: 1, scale: 1, },
     leave: { opacity: 0, scale: 0, },
+    reverse: true,
     config: {
       duration: 200,
     }
@@ -63,7 +137,7 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({ images }) => {
     0.2,
   ])
 
-  const [springs, api] = useSpring(
+  const [modalStyles, api] = useSpring(
     () => ({
       opacity: 1,
       background: '#eee6e3',
@@ -79,9 +153,10 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({ images }) => {
 
   const handleOpenModal = () => {
     setOpen(true);
+    lock();
     api.set({
       opacity: 1,
-      background: '#eee6e3',
+      background: 'var(--color-peach)',
       display: 'block',
       left: wrapperSize.left,
       top: wrapperSize.top,
@@ -89,23 +164,39 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({ images }) => {
       width: wrapperSize.width,
     });
     api.start({
-      // background: '#fffaf5',
+      background: 'var(--color-background)',
       left: 0,
       top: 0,
       height: window.innerHeight,
       width: window.innerWidth,
+      onResolve(result, ctrl, item) {
+        ctrl.set({
+          height: '100vh',
+          width: '100vw',
+        } as any)
+      },
     })
   }
 
+
   const handleCloseModal = async () => {
+    setOpen(false);
+    api.set({
+      height: window.innerHeight,
+      width: window.innerWidth,
+    } as any)
     await api.start({
       left: wrapperSize.left,
       top: wrapperSize.top,
       height: wrapperSize.height,
       width: wrapperSize.width,
-      background: '#fffaf5',
+      background: 'var(--color-peach)',
+      config: {
+        duration: 350,
+      },
       onResolve(result, ctrl, item) {
         ctrl.start({
+          top: wrapperSize.top + wrapperSize.height / 2,
           height: 0,
           opacity: 0,
           onResolve(result, ctrl, item) {
@@ -115,40 +206,58 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({ images }) => {
             setOpen(false)
           }
         })
+        unlock()
       },
     })
   }
 
   return <>
-    <animated.div style={springs} className="bg-beige rounded-sm fixed z-10">
-      <div className="h-full w-full">
-        <button onClick={handleCloseModal}>Close</button>
-        <Gallery open={open} data={data} />
+    <animated.div style={modalStyles} className="rounded-sm fixed z-10 overflow-hidden">
+      <div className="w-screen h-screen overflow-y-auto pb-5 sm:pb-20 relative pt-5 sm:pt-20">
+        <Button
+          onClick={handleCloseModal}
+          variant="ghost"
+          size="icon"
+          className="text-brown hover:text-light-brown absolute right-9 top-9"
+        >
+          <IconClose />
+        </Button>
+        <PortfolioModal
+          gridType={PortfolioTypeToGalleryGridType[type]}
+          title={name}
+          open={open}
+          headerImages={headerImages}
+          images={modalImages}
+          task={task}
+          implementation={implementation}
+        />
       </div>
     </animated.div>
-    <div ref={wrapperRef} onClick={handleOpenModal}>
-      <div ref={ref} className="group flex justify-between items-center p-5 rounded-sm overflow-hidden hover:bg-beige">
+    <div ref={element => {
+      wrapperRef(element);
+      ref.current = element;
+    }} className="group hover:bg-peach transition-colors cursor-pointer border-t border-peach" onClick={handleOpenModal}>
+      <div ref={ref} className="container flex justify-between items-center p-5 rounded-sm overflow-hidden">
         <div className='flex-1 relative'>
-          <animated.div className="text-title2 font-mak font-bold whitespace-nowrap">
-            Web3 приложение Human
-          </animated.div>
-          {/* <animated.div style={text2SpringStyle} className="text-title2 font-bold whitespace-nowrap absolute left-0 top-0">
-            Web3 приложение Human
-          </animated.div> */}
+          <AnimatedHeading heading={name} isHover={isHover} className="text-brown" />
         </div>
-        <div className="flex gap-1 h-10 flex-row-reverse transform translate-x-2 group-hover:translate-x-0 transition-transform duration-200">
+        <div className="hidden sm:flex h-16 gap-3 transform translate-x-2 group-hover:translate-x-0 transition-transform duration-200">
           {animatedImages((style, src) => (
-            <animated.img style={style} className="size-10 rounded-sm" alt="heh" src={src} />
+            <animated.img style={style} className="size-16 rounded-lg" alt="heh" src={src} />
           ))}
-          {/* {images.map((src) => )} */}
         </div>
       </div>
     </div>
   </>
 }
 
-export const Portfolio = () => {
-  return <div>
-    <PortfolioItem images={['/images/1.jpg', '/images/2.jpg', '/images/3.jpg']} />
+export const Portfolio = ({ data }) => {
+  return <div className='mt-10'>
+    {data.map(item =>
+      <PortfolioItem
+        key={item.name}
+        {...item}
+      />
+    )}
   </div>
 }

@@ -22,7 +22,7 @@ const AboutItem: React.FC<AboutItemProps> = ({ title, subtitle, className }) => 
 )
 
 export const AboutSection = () => {
-  return <section className="container mt-24">
+  return <section className="container">
     <SectionHeading>ОБО МНЕ</SectionHeading>
     <div className="grid grid-cols-12 gap-x-1 md:gap-x-5 gap-y-[1px]">
       <div className="col-start-1 col-end-13 md:col-start-7 md:col-end-13 md:row-start-1 md:row-end-4 mb-8">

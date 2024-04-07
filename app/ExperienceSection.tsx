@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export const ExperienceSection = () =>
-  <section className="container mt-24">
+  <section className="container">
 
     <SectionHeading>
       ОПЫТ РАБОТЫ
@@ -46,7 +46,7 @@ export const ExperienceSection = () =>
             </Typography>
           </div>
         </div>
-        <Button variant={"link"} asChild className="mt-5">
+        <Button variant={"link"} asChild className="mt-5 self-center">
           <Link href="/resume">
             Подробнее в Резюме →
           </Link>

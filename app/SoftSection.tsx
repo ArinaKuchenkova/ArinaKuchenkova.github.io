@@ -16,7 +16,7 @@ const SectionItems: React.FC<ComponentPropsWithoutRef<'div'> & {
 )
 
 export const SoftSection = () =>
-  <section className="container mt-24">
+  <section className="container">
     <SectionHeading>
       РАБОЧИЙ СОФТ
     </SectionHeading>

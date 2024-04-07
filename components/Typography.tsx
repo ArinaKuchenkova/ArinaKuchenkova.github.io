@@ -13,7 +13,7 @@ enum FontSize {
   'title4' = 'title4',
 }
 
-type TypographyProps = HTMLAttributes<HTMLOrSVGElement> & {
+export type TypographyProps = HTMLAttributes<HTMLOrSVGElement> & {
   size?: keyof typeof FontSize;
   family?: 'mak' | 'evolventa'
   className?: string;

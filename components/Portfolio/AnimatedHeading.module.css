@@ -1,0 +1,10 @@
+@keyframes jump {
+  50% {
+    transform: translateY(-30%);
+  }
+}
+
+.lettersWrapper.isAnimating .letter {
+  animation: jump 300ms 1;
+  animation-delay: calc(var(--index) * 20ms);
+}

@@ -5,9 +5,9 @@ import Link from "next/link";
 import { ComponentPropsWithoutRef } from "react";
 
 const ContactsBadge: React.FC<{ href: string, children: React.ReactNode }> = ({ href, children }) =>
-  <Badge as={Link} href={href} size="large" className="sm:min-w-[200px] max-w-52 text-background flex justify-between">
+  <Badge as={Link} href={href} size="large" className="group sm:min-w-[200px] max-w-52 text-background flex justify-between">
     <span>{children}</span>
-    <span>→</span>
+    <span className="group-hover:translate-x-[6px] transition-transform">→</span>
   </Badge>
 
 const Contacts = () => {

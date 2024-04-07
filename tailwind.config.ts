@@ -23,7 +23,7 @@ const config: Config = {
     extend: {
       colors: {
         "foreground": "#251D15",
-        "background": "#FFFAF5",
+        "background": "var(--color-background, #FFFAF5)",
         "brown": "#724F2C",
         "light-brown": "#8C6D62",
         "peach": "var(--color-peach, #F4DFC9)",

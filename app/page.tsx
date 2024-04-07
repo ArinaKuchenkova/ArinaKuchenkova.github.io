@@ -8,13 +8,13 @@ import { ContactsSection } from "./ContactsSection";
 
 export default function Home() {
   return (
-    <>
+    <main className="flex flex-col gap-10 lg:gap-32">
       <PromoSection />
       <AboutSection />
       <SoftSection />
       <ExperienceSection />
       <PortfolioSection />
       <ContactsSection />
-    </>
+    </main>
   );
 }
