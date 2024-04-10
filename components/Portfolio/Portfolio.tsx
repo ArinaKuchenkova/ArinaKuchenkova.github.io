@@ -42,7 +42,7 @@ const Gallery: React.FC<{ images: string[], gridType: GalleryGridType }> = ({ im
     [styles.normal]: gridType === GalleryGridType.normal,
     [styles.same]: gridType === GalleryGridType.same,
   })}>
-    {images.map(src => <img src={src} key={src} className="rounded-lg w-full h-full object-cover" />)}
+    {images.map(src => <img src={src} key={src} className="rounded-lg w-full h-full object-cover border border-beige" />)}
   </div>
 }
 

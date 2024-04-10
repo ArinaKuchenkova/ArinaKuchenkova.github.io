@@ -60,7 +60,7 @@ const Footer: React.FC<ComponentPropsWithoutRef<'footer'>> = ({ className, ...pr
 
 export const ContactsSection = () => {
   return (
-    <section className="bg-brown pt-24 text-background footer">
+    <section className="bg-brown pt-24 text-background footer" id="contacts">
       <div className="container">
         <Typography family="mak" size="title1" className="font-bold">КОНТАКТЫ</Typography>
         <Typography className="block mt-14 max-w-xl">

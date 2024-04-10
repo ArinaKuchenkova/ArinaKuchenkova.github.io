@@ -127,21 +127,46 @@ export const data = [
     name: 'Мой сайт-портфолио',
     description: 'TODO',
     type: PortfolioType.site,
+    task: <>
+      <p>Создать дизайн своего сайта-портфолио, который включает в себя главную страницу с основной информацией и резюме.</p>
+      <p>
+        В частности:
+      </p>
+      <br />
+      <List>
+        <ListItem>
+          разработать адаптивный дизайн
+        </ListItem>
+        <ListItem>
+          добавить микро-анимации
+        </ListItem>
+        <ListItem>
+          создать отдельные окна для оформления и презентации примеров проектов, размещения кейсов
+        </ListItem>
+        <ListItem>
+          предусмотреть быстрый доступ к контактам и пролинковку секций
+        </ListItem>
+      </List>
+    </>,
+    implementation: <>
+      <p>В качестве основного был выбран шрифт с простым геометрическим начертанием Evolventa. В качестве акцентного шрифта выступает экспериментальный контрастный Mak.</p>
+      <p>Дизайн лёгкий и воздушный, с ненавязчивыми анимациями и стилистическими элементами, вдохновлёнными художественными академическими мотивами и атмосферой. Также в дизайне используются графические элементы, отсылающие к работе с Figma.</p>
+    </>,
     headerImages: [
-      '/images/sgraph/1.webp',
-      '/images/sgraph/2.webp',
-      '/images/sgraph/3.webp',
-      '/images/sgraph/4.webp',
+      '/images/my-site/1.webp',
+      '/images/my-site/2.webp',
+      '/images/my-site/3.webp',
+      '/images/my-site/4.webp',
     ],
     modalImages: [
-      '/images/sgraph/5.webp',
-      '/images/sgraph/6.webp',
-      '/images/sgraph/7.webp',
-      '/images/sgraph/8.webp',
-      '/images/sgraph/9.webp',
-      '/images/sgraph/10.webp',
-      '/images/sgraph/11.webp',
-      '/images/sgraph/12.webp',
+      '/images/my-site/5.webp',
+      '/images/my-site/6.webp',
+      '/images/my-site/7.webp',
+      '/images/my-site/8.webp',
+      '/images/my-site/9.webp',
+      '/images/my-site/10.webp',
+      '/images/my-site/11.webp',
+      '/images/my-site/12.webp',
     ],
   },
   {
@@ -296,44 +321,62 @@ export const data = [
   },
   {
     name: 'Креативы для rebase',
-    description: 'TODO',
+    task: <>
+      <p>Создать креативы для соцсетей платформы rebase.</p>
+      <p>Необходимо было учесть использование креативов в разных соцсетях, следовательно, была проведена работа с разными форматами. Также сами креативы были различного типа — посты, карусели, баннеры и т.д.</p>
+    </>,
+    implementation: <>
+      <p>Оформление креативов создавалось на основе дизайна самого продукта на текущий момент (шрифты, цветовая палитра, графические элементы, эффекты и т.д.).</p>
+      <p>Ниже представлены примеры креативов из разных стилистических итераций.</p>
+    </>,
     type: PortfolioType.creative,
     headerImages: [
-      '/images/sgraph/1.webp',
-      '/images/sgraph/2.webp',
-      '/images/sgraph/3.webp',
-      '/images/sgraph/4.webp',
+      '/images/rebase-creative/1.webp',
+      '/images/rebase-creative/2.webp',
+      '/images/rebase-creative/3.webp',
+      '/images/rebase-creative/4.webp',
     ],
     modalImages: [
-      '/images/sgraph/5.webp',
-      '/images/sgraph/6.webp',
-      '/images/sgraph/7.webp',
-      '/images/sgraph/8.webp',
-      '/images/sgraph/9.webp',
-      '/images/sgraph/10.webp',
-      '/images/sgraph/11.webp',
-      '/images/sgraph/12.webp',
+      '/images/rebase-creative/5.webp',
+      '/images/rebase-creative/6.webp',
+      '/images/rebase-creative/7.webp',
+      '/images/rebase-creative/8.webp',
+      '/images/rebase-creative/9.webp',
+      '/images/rebase-creative/10.webp',
+      '/images/rebase-creative/11.webp',
+      '/images/rebase-creative/12.webp',
+      '/images/rebase-creative/13.webp',
+      '/images/rebase-creative/14.webp',
     ],
   },
   {
     name: 'Креативы для Human',
-    description: 'TODO',
+    task: <>
+      <p>Создать креативы для соцсетей платформы Human.</p>
+      <p>Необходимо было учесть использование креативов в разных соцсетях, следовательно, была проведена работа с разными форматами. Также сами креативы были различного типа — посты, сторис, баннеры и т.д.</p>
+    </>,
+    implementation: <>
+      <p>Оформление креативов создавалось на основе дизайна самого продукта на текущий момент (шрифты, цветовая палитра, графические элементы, эффекты и т.д.).</p>
+      <p>Ниже представлены примеры креативов из разных стилистических итераций.</p>
+    </>,
     type: PortfolioType.creative,
     headerImages: [
-      '/images/sgraph/1.webp',
-      '/images/sgraph/2.webp',
-      '/images/sgraph/3.webp',
-      '/images/sgraph/4.webp',
+      '/images/human-creative/1.webp',
+      '/images/human-creative/2.webp',
+      '/images/human-creative/3.webp',
+      '/images/human-creative/4.webp',
     ],
     modalImages: [
-      '/images/sgraph/5.webp',
-      '/images/sgraph/6.webp',
-      '/images/sgraph/7.webp',
-      '/images/sgraph/8.webp',
-      '/images/sgraph/9.webp',
-      '/images/sgraph/10.webp',
-      '/images/sgraph/11.webp',
-      '/images/sgraph/12.webp',
+      '/images/human-creative/5.webp',
+      '/images/human-creative/6.webp',
+      '/images/human-creative/7.webp',
+      '/images/human-creative/8.webp',
+      '/images/human-creative/9.webp',
+      '/images/human-creative/10.webp',
+      '/images/human-creative/11.webp',
+      '/images/human-creative/12.webp',
+      '/images/human-creative/13.webp',
+      '/images/human-creative/14.webp',
     ],
   },
   {
