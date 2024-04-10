@@ -16,13 +16,13 @@ const SectionItems: React.FC<ComponentPropsWithoutRef<'div'> & {
 )
 
 export const SoftSection = () =>
-  <section className="container">
+  <section className="container" id="soft">
     <SectionHeading>
       РАБОЧИЙ СОФТ
     </SectionHeading>
     <div className="flex flex-col gap-3 soft-wrapper lg:grid lg:grid-cols-4 lg:grid-flow-col lg:gap-5">
       <Card className="col-span-2 row-span-2 row-start-1 bg-[#E0D5CA]">
-        <Typography className="text-title2 text-brown font-mak mb-3">
+        <Typography className="text-title2 text-brown font-mak mb-3 font-bold leading-tight">
           Figma
         </Typography>
         <SectionItems items={[
@@ -40,7 +40,7 @@ export const SoftSection = () =>
         ]} />
       </Card>
       <Card className="col-span-1 row-start-1 bg-beige">
-        <Typography className="text-title2 text-brown font-mak mb-3">
+        <Typography className="text-title2 text-brown font-mak mb-3 font-bold leading-tight">
           Adobe Illustrator
         </Typography>
         <SectionItems items={[
@@ -50,7 +50,7 @@ export const SoftSection = () =>
         ]} />
       </Card>
       <Card className="col-span-1 row-start-1 bg-[#CFDCE7]">
-        <Typography className="text-title2 text-brown font-mak mb-3">
+        <Typography className="text-title2 text-brown font-mak mb-3 font-bold leading-tight">
           Adobe Photoshop
         </Typography>
         <SectionItems items={[
@@ -60,7 +60,7 @@ export const SoftSection = () =>
         ]} />
       </Card>
       <Card className="col-span-2 col-start-3 row-start-2 bg-peach">
-        <Typography className="text-title2 text-brown font-mak mb-3">
+        <Typography className="text-title2 text-brown font-mak mb-3 font-bold leading-tight">
           Вспомогательный софт
         </Typography>
         <div>

@@ -10,7 +10,7 @@ import IconPortfolio from '@/icons/portfolio.svg'
 export const PortfolioSection = () => {
   const [category, setCategory] = useState('all');
 
-  return <section>
+  return <section id="portfolio">
     <div className="container">
       <IconPortfolio className="w-full mb-5" />
       {/* <SectionHeading className="text-with-prikol uppercase">

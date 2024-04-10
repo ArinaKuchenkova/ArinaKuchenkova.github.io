@@ -7,8 +7,8 @@ import Typography from '@/components/Typography';
 import { useScroll, animated } from 'react-spring';
 import Link from 'next/link';
 
-const circleTranslateX = 400;
-const circleRotate = 500;
+const circleTranslateX = 600;
+const circleRotate = 700;
 
 export const PromoSection = () => {
   const { scrollYProgress } = useScroll({

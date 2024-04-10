@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export const ExperienceSection = () =>
-  <section className="container">
+  <section className="container" id="experience">
 
     <SectionHeading>
       ОПЫТ РАБОТЫ
