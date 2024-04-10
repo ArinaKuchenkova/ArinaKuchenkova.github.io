@@ -146,7 +146,7 @@ const Aside = () => {
           )}
         </ul>
       </nav>
-      <TypographyLink href="/">Портфолио →</TypographyLink>
+      <TypographyLink href="/#portfolio">Портфолио →</TypographyLink>
       <div className="flex flex-col gap-4">
         <div className="flex gap-2">
           <Link href="#">

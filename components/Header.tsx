@@ -27,7 +27,7 @@ const Header = () => {
     <header className={cn("container w-full mx-auto py-6 px-4 h-[100px] flex justify-between items-center lg:grid grid-cols-12 grid-flow-col gap-5", {
       "fixed top-0 left-0 bg-background z-50": menuOpen
     })}>
-      <Typography size="title4" family="mak" className="text-brown font-bold">@rina</Typography>
+      <Typography as={Link} href="/" size="title4" family="mak" className="text-brown font-bold">@rina</Typography>
       <MenuIcon className="sm:hidden" open={menuOpen} onClick={() => {
         if (!menuOpen) {
           lock()
@@ -37,6 +37,7 @@ const Header = () => {
         setMenuOpen(open => !open)
       }} />
       <div className={cn({
+        "hidden": pathname.startsWith('/resume'),
         "contents": !menuOpen,
         "fixed top-[100px] w-screen left-0 h-screen bg-background z-50 p-5": menuOpen
       })}>

@@ -221,7 +221,7 @@ const Resume = () => {
               </div>
             )}
           </section>
-          <TypographyLink href="/">
+          <TypographyLink href="/#portfolio">
             <Card className="bg-beige p-6 flex items-center justify-center">
               Портфолио →
             </Card>
