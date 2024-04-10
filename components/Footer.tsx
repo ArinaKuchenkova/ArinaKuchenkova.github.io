@@ -8,10 +8,10 @@ const Footer: React.FC<ComponentPropsWithoutRef<'footer'>> = ({ className, ...pr
     <Typography size="title4" family="mak" className="text-brown font-bold">@rina</Typography>
     <div className="flex justify-between items-center">
       <Typography size="body2" className="text-brown">
-        Designed with ❤️ by me. Developed by <TypographyLink outlined href="https://zhenya.dev/" target="_blank">Zhenya</TypographyLink>.
+        Designed with ❤️ by me. Developed by <TypographyLink href="https://zhenya.dev/" target="_blank">Zhenya</TypographyLink>.
       </Typography>
-      <Typography size="body2" className="text-brown">
-        © Кученкова Арина, 2024
+      <Typography size="body2" className="text-brown opacity-60">
+        © Кученкова Арина, {new Date(Date.now()).getFullYear()}
       </Typography>
     </div>
   </footer>

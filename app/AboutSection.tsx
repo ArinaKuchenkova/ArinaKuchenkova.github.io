@@ -11,7 +11,7 @@ type AboutItemProps = ComponentPropsWithoutRef<'div'> & {
 }
 
 const AboutItem: React.FC<AboutItemProps> = ({ title, subtitle, className }) => (
-  <div className={cn(className, "px-6 py-3 md:px-10 md:py-5 rounded-full ring-1 ring-peach text-brown flex flex-col md:gap-1")}>
+  <div className={cn(className, "px-6 py-3 md:px-10 md:py-5 rounded-full ring-1 ring-peach text-brown flex flex-col md:gap-1 justify-center")}>
     <Typography as="span" className="text-title2 font-mak font-bold leading-tight">
       {title}
     </Typography>
@@ -38,7 +38,12 @@ export const AboutSection = () => {
           Ориентируюсь на понятность, удобство и аккуратность.
         </Typography>
         <Card className="bg-beige mt-10">
-          <b>Ищу full-time работу</b> в компании/ студии/ стартапе и т.д., рассматриваю удалённый или гибридный формат работы.
+          <div className="flex items-baseline gap-3">
+            <span>👋</span>
+            <span>
+              <strong>Ищу работу</strong>, рассматриваю удалённый или гибридный формат.
+            </span>
+          </div>
         </Card>
       </div>
       <WidthInfo className="md:row-start-1 col-start-1 col-end-3 md:col-end-2 md:-mr-5" />

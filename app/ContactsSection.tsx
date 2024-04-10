@@ -3,6 +3,7 @@ import Typography from "@/components/Typography";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { ComponentPropsWithoutRef } from "react";
+import { SectionHeading } from "./SectionHeading";
 
 const ContactsBadge: React.FC<{ href: string, children: React.ReactNode }> = ({ href, children }) =>
   <Badge as={Link} href={href} size="large" className="group sm:min-w-[200px] max-w-52 text-background flex justify-between">
@@ -47,12 +48,12 @@ const Contacts = () => {
 const Footer: React.FC<ComponentPropsWithoutRef<'footer'>> = ({ className, ...props }) => (
   <footer className={cn("flex flex-col gap-3 py-6", className)} {...props}>
     <Typography size="title4" family="mak" className="text-background font-bold">@rina</Typography>
-    <div className="flex justify-between items-center">
+    <div className="flex flex-col sm:flex-row justify-between sm:items-center">
       <Typography size="body2" className="text-background">
         Designed with ❤️ by me. Developed by <Typography as={Link} href="https://zhenya.dev/" target="_blank" className="text-background font-bold">Zhenya</Typography>.
       </Typography>
-      <Typography size="body2" className="text-background">
-        © Кученкова Арина, 2024
+      <Typography size="body2" className="text-background opacity-60">
+        © Кученкова Арина, {new Date(Date.now()).getFullYear()}
       </Typography>
     </div>
   </footer>
@@ -60,14 +61,16 @@ const Footer: React.FC<ComponentPropsWithoutRef<'footer'>> = ({ className, ...pr
 
 export const ContactsSection = () => {
   return (
-    <section className="bg-brown pt-24 text-background footer" id="contacts">
+    <section className="bg-brown pt-20 sm:pt-24 text-background footer" id="contacts">
       <div className="container">
-        <Typography family="mak" size="title1" className="font-bold">КОНТАКТЫ</Typography>
-        <Typography className="block mt-14 max-w-xl">
-          Связаться со мной можно по почте kuchenkova.av@yandex.ru или через любой социальный профиль, указанный ниже.
+        <SectionHeading className="!text-background">
+          КОНТАКТЫ
+        </SectionHeading>
+        <Typography className="block mt-10 max-w-xl">
+          Связаться со мной можно по почте <b>kuchenkova.av@yandex.ru</b> или через любой социальный профиль, указанный ниже.
         </Typography>
         <Contacts />
-        <Footer className="mt-44 text-background" />
+        <Footer className="mt-20 sm:mt-44 text-background" />
       </div>
     </section>
   )

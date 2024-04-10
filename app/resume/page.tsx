@@ -101,7 +101,7 @@ const Resume = () => {
               <div className="flex items-baseline gap-3">
                 <span>👋</span>
                 <span>
-                  <strong>Ищу full-time работу</strong> в компании/ студии/ стартапе и т.д., рассматриваю удалённый или гибридный формат работы.
+                  <strong>Ищу работу</strong>, рассматриваю удалённый или гибридный формат.
                 </span>
               </div>
             </Card>
@@ -222,8 +222,8 @@ const Resume = () => {
             )}
           </section>
           <TypographyLink href="/#portfolio">
-            <Card className="bg-beige p-6 flex items-center justify-center">
-              Портфолио →
+            <Card className="group bg-beige p-6 flex items-center justify-center self-start">
+              Портфолио&nbsp;<span className="group-hover:translate-x-1 transition-transform">→</span>
             </Card>
           </TypographyLink>
         </main>

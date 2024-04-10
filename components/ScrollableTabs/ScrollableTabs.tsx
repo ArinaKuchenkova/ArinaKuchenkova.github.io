@@ -41,7 +41,7 @@ export const ScrollableTabs = <T extends string,>({ items, activeTab, onChange, 
         <button
           onClick={() => onChange(item.key)}
           data-key={item.key}
-          className={cn("border-b text-[1rem] sm:text-body1", {
+          className={cn("border-b text-[1rem] sm:text-body1 hover:text-brown transition-colors", {
             "text-foreground border-transparent": activeTab !== item.key,
             "border-b border-brown text-brown": activeTab === item.key
           })}

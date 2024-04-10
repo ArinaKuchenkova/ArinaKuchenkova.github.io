@@ -37,7 +37,7 @@ enum GalleryGridType {
 }
 
 const Gallery: React.FC<{ images: string[], gridType: GalleryGridType }> = ({ images = [], gridType = GalleryGridType.normal }) => {
-  return <div className={cn("grid grid-cols-4 gap-5", styles.gallery, {
+  return <div className={cn("grid grid-cols-4 gap-1 sm:gap-5", styles.gallery, {
     [styles.hero]: gridType === GalleryGridType.hero,
     [styles.normal]: gridType === GalleryGridType.normal,
     [styles.same]: gridType === GalleryGridType.same,
@@ -59,13 +59,15 @@ const PortfolioModal: React.FC<PortfolioModalProps> = ({ open, title, headerImag
   useChain([transApi], [open ? 0.1 : 0])
 
   return <div className={cn("")}>
-    <Typography className={cn('container text-title2 text-brown font-bold text-center mb-5 sm:mb-9 transition-opacity', {
+    <Typography className={cn('container text-title2 text-brown font-bold text-center pt-5 sm:pt-0 mb-5 sm:mb-9 transition-opacity', {
       "opacity-1": open,
       "opacity-0": !open
-    })}>{title}</Typography>
-    <div className="container grid grid-cols-12 grid-flow-col gap-5">
-      <div className="col-start-2 col-end-12">
-        <div className='grid grid-cols-4 gap-5'>
+    })}>
+      {title}
+    </Typography>
+    <div className="container grid grid-cols-12 grid-flow-col gap-5 pb-16">
+      <div className="col-start-1 col-end-13 sm:col-start-2 sm:col-end-12">
+        <div className='grid grid-cols-4 gap-1 sm:gap-5'>
           {transition((style, src) => (
             <animated.img
               className="aspect-square bg-white rounded-lg"
@@ -74,7 +76,7 @@ const PortfolioModal: React.FC<PortfolioModalProps> = ({ open, title, headerImag
             />
           ))}
         </div>
-        <div className='grid grid-cols-2 gap-5 mt-10 mb-10'>
+        <div className='grid grid-cols-2 gap-5 mt-10 empty:hidden mb-10'>
           {task && <div>
             <Typography className='text-title4 text-brown font-bold'>
               Задача
@@ -219,7 +221,7 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({
           onClick={handleCloseModal}
           variant="ghost"
           size="icon"
-          className="text-brown hover:text-light-brown absolute right-9 top-9"
+          className="text-brown hover:text-light-brown absolute right-2 sm:right-9 top-2 sm:top-9"
         >
           <IconClose />
         </Button>
@@ -237,7 +239,7 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({
     <div ref={element => {
       wrapperRef(element);
       ref.current = element;
-    }} className="group hover:bg-peach transition-colors cursor-pointer border-t border-peach" onClick={handleOpenModal}>
+    }} className="group hover:bg-peach transition-colors cursor-pointer border-t border-peach last-of-type:border-b" onClick={handleOpenModal}>
       <div ref={ref} className="container flex justify-between items-center p-5 rounded-sm overflow-hidden">
         <div className='flex-1 relative'>
           <AnimatedHeading heading={name} isHover={isHover} className="text-brown" />

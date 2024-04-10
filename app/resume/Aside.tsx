@@ -137,7 +137,7 @@ const Aside = () => {
         <ul className="flex flex-col gap-3">
           {navMenuItems.map(item =>
             <li key={item.sectionId}>
-              <Link href={'#' + item.sectionId} className={clsx("pb-1", {
+              <Link href={'#' + item.sectionId} className={clsx("pb-1 hover:text-brown transition-colors", {
                 'text-brown border-b border-brown': item.sectionId === activeSectionId
               })}>
                 {item.label}
@@ -146,7 +146,7 @@ const Aside = () => {
           )}
         </ul>
       </nav>
-      <TypographyLink href="/#portfolio">Портфолио →</TypographyLink>
+      <TypographyLink className="self-start animated-underline" href="/#portfolio">Портфолио →</TypographyLink>
       <div className="flex flex-col gap-4">
         <div className="flex gap-2">
           <Link href="#">
