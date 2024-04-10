@@ -6,6 +6,7 @@ import Link from "next/link";
 import Aside from "./Aside";
 import { Badge } from "@/components/Badge";
 import { Card } from "@/components/Card";
+import { Metadata } from "next/types";
 
 const worksData = [
   {
@@ -232,5 +233,10 @@ const Resume = () => {
     </div >
   )
 }
+
+export const metadata: Metadata = {
+  title: "Кученкова Арина - резюме",
+  description: "UI/UX Дизайнер",
+};
 
 export default Resume
