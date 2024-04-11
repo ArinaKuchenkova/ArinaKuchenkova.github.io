@@ -18,6 +18,10 @@ type PortfolioItemProps = {
   implementation: React.ReactNode;
   headerImages: string[];
   modalImages: string[];
+  sections?: {
+    name: React.ReactNode;
+    images: string[]
+  }[]
 }
 
 type PortfolioModalProps = {
@@ -27,7 +31,12 @@ type PortfolioModalProps = {
   implementation: React.ReactNode;
   headerImages: string[];
   images: string[];
+  sections?: {
+    name: React.ReactNode;
+    images: string[]
+  }[]
   gridType: GalleryGridType;
+  onClose?: () => void
 }
 
 enum GalleryGridType {
@@ -46,7 +55,17 @@ const Gallery: React.FC<{ images: string[], gridType: GalleryGridType }> = ({ im
   </div>
 }
 
-const PortfolioModal: React.FC<PortfolioModalProps> = ({ open, title, headerImages, images, task, implementation, gridType }) => {
+const PortfolioModalContent: React.FC<PortfolioModalProps> = ({
+  open,
+  title,
+  headerImages,
+  sections,
+  images,
+  task,
+  implementation,
+  gridType,
+  onClose,
+}) => {
   const transApi = useSpringRef()
   const transition = useTransition(open ? headerImages : [], {
     ref: transApi,
@@ -58,14 +77,22 @@ const PortfolioModal: React.FC<PortfolioModalProps> = ({ open, title, headerImag
 
   useChain([transApi], [open ? 0.1 : 0])
 
-  return <div className={cn("")}>
+  return <div className="w-screen h-screen overflow-y-auto pb-5 sm:pb-10 relative pt-5 sm:pt-20">
+    <Button
+      onClick={onClose}
+      variant="ghost"
+      size="icon"
+      className="text-brown hover:text-light-brown absolute right-2 sm:right-9 top-2 sm:top-9"
+    >
+      <IconClose />
+    </Button>
     <Typography className={cn('container text-title2 text-brown font-bold text-center pt-5 sm:pt-0 mb-5 sm:mb-9 transition-opacity', {
       "opacity-1": open,
       "opacity-0": !open
     })}>
       {title}
     </Typography>
-    <div className="container grid grid-cols-12 grid-flow-col gap-5 pb-16">
+    <div className="container grid grid-cols-12 grid-flow-col gap-5">
       <div className="col-start-1 col-end-13 sm:col-start-2 sm:col-end-12">
         <div className='grid grid-cols-4 gap-1 sm:gap-5'>
           {transition((style, src) => (
@@ -91,6 +118,17 @@ const PortfolioModal: React.FC<PortfolioModalProps> = ({ open, title, headerImag
           </div>}
         </div>
         <Gallery gridType={gridType} images={images} />
+        <div className='flex flex-col gap-16'>
+          {sections?.map((section, index) => <div key={index}>
+            <Typography className="text-title4 font-bold text-brown text-center mb-4">{section.name}</Typography>
+            <Gallery gridType={GalleryGridType.hero} images={section.images} />
+          </div>)}
+        </div>
+      </div>
+      <div className='pt-8 col-start-1 col-end-13 flex items-center justify-center'>
+        <Button onClick={onClose} variant={'ghost'} className='text-brown self-center'>
+          Закрыть
+        </Button>
       </div>
     </div>
   </div>
@@ -112,6 +150,7 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({
   name,
   implementation,
   task,
+  sections,
   type
 }) => {
   const [wrapperRef, wrapperSize] = useMeasure({ scroll: true });
@@ -125,7 +164,7 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({
 
   const animatedImages = useTransition(isHover ? headerImages : [], {
     ref: transApi,
-    trail: 200 / modalImages.length,
+    trail: 200 / headerImages.length,
     from: { opacity: 0, scale: 0, },
     enter: { opacity: 1, scale: 1, },
     leave: { opacity: 0, scale: 0, },
@@ -181,7 +220,6 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({
     })
   }
 
-
   const handleCloseModal = async () => {
     setOpen(false);
     api.set({
@@ -216,25 +254,17 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({
 
   return <>
     <animated.div style={modalStyles} className="rounded-sm fixed z-10 overflow-hidden">
-      <div className="w-screen h-screen overflow-y-auto pb-5 sm:pb-20 relative pt-5 sm:pt-20">
-        <Button
-          onClick={handleCloseModal}
-          variant="ghost"
-          size="icon"
-          className="text-brown hover:text-light-brown absolute right-2 sm:right-9 top-2 sm:top-9"
-        >
-          <IconClose />
-        </Button>
-        <PortfolioModal
-          gridType={PortfolioTypeToGalleryGridType[type]}
-          title={name}
-          open={open}
-          headerImages={headerImages}
-          images={modalImages}
-          task={task}
-          implementation={implementation}
-        />
-      </div>
+      <PortfolioModalContent
+        gridType={PortfolioTypeToGalleryGridType[type]}
+        title={name}
+        open={open}
+        headerImages={headerImages}
+        images={modalImages}
+        task={task}
+        implementation={implementation}
+        sections={sections}
+        onClose={handleCloseModal}
+      />
     </animated.div>
     <div ref={element => {
       wrapperRef(element);

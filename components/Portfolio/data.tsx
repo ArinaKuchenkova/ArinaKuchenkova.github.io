@@ -226,25 +226,72 @@ export const data = [
     type: PortfolioType.landing,
   },
   {
-    name: 'Лендинги для Human',
+    name: 'Лендинги для HumanIPO',
     description: 'TODO',
     type: PortfolioType.landing,
+    task: <>
+      <p>
+        HumanIPO – быстроразвивающийся и быстроменяющийся стартап. Ниже приведены примеры лендингов для продуктов стартапа на разных этапах развития.
+      </p>
+      <p>
+        Конечный результат сильно отличается от того, что было в самом начале.
+      </p>
+    </>,
+    implementation: <>
+      <p>
+        Для создания графического оформления — паттерны, бэкграунды, векторные фигуры и элементы, работа с эффектами, обработка изображений и т.д. — использовались Adobe Illustrator, Adobe Photoshop и Figma (основной функционал, плагины, свободные материалы комьюнити и т.д.).
+      </p>
+      <p>
+        Макеты для вёрстки были выполнены в Figma.
+      </p>
+    </>,
     headerImages: [
-      '/images/sgraph/1.webp',
-      '/images/sgraph/2.webp',
-      '/images/sgraph/3.webp',
-      '/images/sgraph/4.webp',
+      '/images/human-ipo/1.webp',
+      '/images/human-ipo/2.webp',
+      '/images/human-ipo/3.webp',
+      '/images/human-ipo/4.webp',
     ],
-    modalImages: [
-      '/images/sgraph/5.webp',
-      '/images/sgraph/6.webp',
-      '/images/sgraph/7.webp',
-      '/images/sgraph/8.webp',
-      '/images/sgraph/9.webp',
-      '/images/sgraph/10.webp',
-      '/images/sgraph/11.webp',
-      '/images/sgraph/12.webp',
-    ],
+    sections: [
+      {
+        name: 'Лендинг №1',
+        images: [
+          '/images/human-ipo/5.webp',
+          '/images/human-ipo/6.webp',
+          '/images/human-ipo/7.webp',
+          '/images/human-ipo/8.webp',
+          '/images/human-ipo/9.webp',
+          '/images/human-ipo/10.webp',
+          '/images/human-ipo/11.webp',
+          '/images/human-ipo/12.webp',
+        ],
+      },
+      {
+        name: 'Лендинг №2',
+        images: [
+          '/images/human-ipo/13.webp',
+          '/images/human-ipo/14.webp',
+          '/images/human-ipo/15.webp',
+          '/images/human-ipo/16.webp',
+          '/images/human-ipo/17.webp',
+          '/images/human-ipo/18.webp',
+          '/images/human-ipo/19.webp',
+          '/images/human-ipo/20.webp',
+        ],
+      },
+      {
+        name: 'Лендинг №3',
+        images: [
+          '/images/human-ipo/21.webp',
+          '/images/human-ipo/22.webp',
+          '/images/human-ipo/23.webp',
+          '/images/human-ipo/24.webp',
+          '/images/human-ipo/25.webp',
+          '/images/human-ipo/26.webp',
+          '/images/human-ipo/27.webp',
+          '/images/human-ipo/28.webp',
+        ],
+      }
+    ]
   },
   {
     name: 'Креативы для The Likeness',
