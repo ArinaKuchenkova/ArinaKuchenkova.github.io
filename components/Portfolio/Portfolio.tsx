@@ -236,6 +236,7 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({
         duration: 350,
       },
       onResolve(result, ctrl, item) {
+        unlock()
         ctrl.start({
           top: wrapperSize.top + wrapperSize.height / 2,
           height: 0,
@@ -247,7 +248,6 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({
             setOpen(false)
           }
         })
-        unlock()
       },
     })
   }
