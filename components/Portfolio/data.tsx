@@ -19,10 +19,10 @@ export const data: PortfolioData[] = [
     gridType: GalleryGridType.hero,
     type: PortfolioType.product,
     taskTitle: "О проекте",
+    implementationTitle: "С чем работала",
     task: <>
       Human – web3 приложение, работающее с новым типом ценных бумаг, который обеспечивает доступ к активам, приносящим дивиденды.
     </>,
-    implementationTitle: "С чем работала",
     implementation: <>
       Разработка дизайна с нуля — от разработки текстовых и цветовых стилей и базовой системы компонентов до внедрения сложных пользовательских фич.
     </>,
@@ -55,6 +55,8 @@ export const data: PortfolioData[] = [
     title: 'Web3 приложение rebase',
     type: PortfolioType.product,
     gridType: GalleryGridType.hero,
+    taskTitle: "О проекте",
+    implementationTitle: "С чем работала",
     task: <>
       <p>rebase – web3 приложение, социальная сеть, где каждый может создавать прогнозы и делать ставки на ожидаемые результаты грядущих событий.</p>
     </>,
@@ -440,9 +442,9 @@ export const data: PortfolioData[] = [
       <p>На этой странице представлены примеры векторных иллюстраций, бэкграундов и паттернов, выполненных в программе Adobe Illustrator. Больше моих работ можно найти в профиле на Dribbble.</p>
     </>,
     implementation: <>
-      <Button asChild variant={"outlined"} className="flex justify-between group min-w-[200px]">
+      <Button asChild variant={"outlined"} className="flex justify-between group min-w-[200px] font-normal">
         <Link href="/#">
-          <span>Dribbble</span>
+          <span className="">Dribbble</span>
           <span className="group-hover:translate-x-[6px] transition-transform">→</span>
         </Link>
       </Button>

@@ -1,5 +1,5 @@
 "use client";
-import React, { Ref, RefObject, useEffect, useRef, useState } from 'react';
+import React, { Ref, RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { useScroll, animated, useSpringRef, useTransition, useChain, useSpring, config, useTrail } from 'react-spring';
 import { useHover, useScrollLock } from 'usehooks-ts'
 import styles from './Portfolio.module.css';
@@ -142,7 +142,7 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
     [wrapperSize.height, wrapperSize.width]
   )
 
-  const handleOpenModal = () => {
+  const handleOpenModal = useCallback(() => {
     setOpen(true);
     lock();
     api.set({
@@ -167,9 +167,9 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
         } as any)
       },
     })
-  }
+  }, [api, lock, wrapperSize.height, wrapperSize.left, wrapperSize.top, wrapperSize.width])
 
-  const handleCloseModal = async () => {
+  const handleCloseModal = useCallback(async () => {
     setOpen(false);
     api.set({
       height: window.innerHeight,
@@ -199,7 +199,7 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
       },
     })
     unlock()
-  }
+  }, [api, unlock, wrapperSize.height, wrapperSize.left, wrapperSize.top, wrapperSize.width])
 
   return <>
     <animated.div style={modalStyles} className="rounded-sm fixed z-10 overflow-hidden">
