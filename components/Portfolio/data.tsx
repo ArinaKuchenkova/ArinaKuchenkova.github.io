@@ -1,5 +1,8 @@
 import React from "react"
 import { List, ListItem } from "../List/List"
+import { GalleryGridType, PortfolioData } from "./types";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 export enum PortfolioType {
   all = 'all',
@@ -10,32 +13,48 @@ export enum PortfolioType {
   illustration = 'illustration',
 }
 
-export const data = [
+export const data: PortfolioData[] = [
   {
-    name: 'Web3 приложение Human',
-    description: 'TODO',
+    title: 'Web3 приложение Human',
+    gridType: GalleryGridType.hero,
     type: PortfolioType.product,
+    taskTitle: "О проекте",
+    task: <>
+      Human – web3 приложение, работающее с новым типом ценных бумаг, который обеспечивает доступ к активам, приносящим дивиденды.
+    </>,
+    implementationTitle: "С чем работала",
+    implementation: <>
+      Разработка дизайна с нуля — от разработки текстовых и цветовых стилей и базовой системы компонентов до внедрения сложных пользовательских фич.
+    </>,
     headerImages: [
-      '/images/sgraph/1.webp',
-      '/images/sgraph/2.webp',
-      '/images/sgraph/3.webp',
-      '/images/sgraph/4.webp',
+      '/images/human/1.webp',
+      '/images/human/2.webp',
+      '/images/human/3.webp',
+      '/images/human/4.webp',
     ],
-    modalImages: [
-      '/images/sgraph/5.webp',
-      '/images/sgraph/6.webp',
-      '/images/sgraph/7.webp',
-      '/images/sgraph/8.webp',
-      '/images/sgraph/9.webp',
-      '/images/sgraph/10.webp',
-      '/images/sgraph/11.webp',
-      '/images/sgraph/12.webp',
+    images: [
+      '/images/human/5.webp',
+      '/images/human/6.webp',
+      '/images/human/7.webp',
+      '/images/human/8.webp',
+      '/images/human/9.webp',
+      '/images/human/10.webp',
+      '/images/human/11.webp',
+      '/images/human/12.webp',
+      '/images/human/13.webp',
+      '/images/human/14.webp',
+      '/images/human/15.webp',
+      '/images/human/16.webp',
+      '/images/human/17.webp',
+      '/images/human/18.webp',
+      '/images/human/19.webp',
+      '/images/human/20.webp',
     ],
   },
   {
-    name: 'Web3 приложение rebase',
-    description: 'TODO',
+    title: 'Web3 приложение rebase',
     type: PortfolioType.product,
+    gridType: GalleryGridType.hero,
     task: <>
       <p>rebase – web3 приложение, социальная сеть, где каждый может создавать прогнозы и делать ставки на ожидаемые результаты грядущих событий.</p>
     </>,
@@ -48,7 +67,7 @@ export const data = [
       '/images/rebase/3.webp',
       '/images/rebase/4.webp',
     ],
-    modalImages: [
+    images: [
       '/images/rebase/5.webp',
       '/images/rebase/6.webp',
       '/images/rebase/7.webp',
@@ -67,38 +86,17 @@ export const data = [
       '/images/rebase/20.webp',
     ],
   },
-  // {
-  //   name: 'Web3 приложение Steaking',
-  //   description: 'TODO',
-  //   type: PortfolioType.product,
-  //   headerImages: [
-  //     '/images/sgraph/1.webp',
-  //     '/images/sgraph/2.webp',
-  //     '/images/sgraph/3.webp',
-  //     '/images/sgraph/4.webp',
-  //   ],
-  //   modalImages: [
-  //     '/images/sgraph/5.webp',
-  //     '/images/sgraph/6.webp',
-  //     '/images/sgraph/7.webp',
-  //     '/images/sgraph/8.webp',
-  //     '/images/sgraph/9.webp',
-  //     '/images/sgraph/10.webp',
-  //     '/images/sgraph/11.webp',
-  //     '/images/sgraph/12.webp',
-  //   ],
-  // },
   {
-    name: 'Сайт-портфолио разработчика',
-    description: 'TODO',
+    title: 'Сайт-портфолио разработчика',
     type: PortfolioType.site,
+    gridType: GalleryGridType.hero,
     headerImages: [
       '/images/zhenya/1.webp',
       '/images/zhenya/2.webp',
       '/images/zhenya/3.webp',
       '/images/zhenya/4.webp',
     ],
-    modalImages: [
+    images: [
       '/images/zhenya/5.webp',
       '/images/zhenya/6.webp',
       '/images/zhenya/7.webp',
@@ -138,9 +136,9 @@ export const data = [
     </>,
   },
   {
-    name: 'Мой сайт-портфолио',
-    description: 'TODO',
+    title: 'Мой сайт-портфолио',
     type: PortfolioType.site,
+    gridType: GalleryGridType.hero,
     task: <>
       <p>Создать дизайн своего сайта-портфолио, который включает в себя главную страницу с основной информацией и резюме.</p>
       <p>
@@ -172,7 +170,7 @@ export const data = [
       '/images/my-site/3.webp',
       '/images/my-site/4.webp',
     ],
-    modalImages: [
+    images: [
       '/images/my-site/5.webp',
       '/images/my-site/6.webp',
       '/images/my-site/7.webp',
@@ -184,14 +182,15 @@ export const data = [
     ],
   },
   {
-    name: 'Лендинг для sGraph',
+    title: 'Лендинг для sGraph',
+    type: PortfolioType.landing,
     headerImages: [
       '/images/sgraph/1.webp',
       '/images/sgraph/2.webp',
       '/images/sgraph/3.webp',
       '/images/sgraph/4.webp',
     ],
-    modalImages: [
+    images: [
       '/images/sgraph/5.webp',
       '/images/sgraph/6.webp',
       '/images/sgraph/7.webp',
@@ -237,12 +236,12 @@ export const data = [
         Графические элементы — геометрические узоры, бэкграунды для карточек — выполнены в Figma с частичной обработкой в Adobe Illustrator.
       </p>
     </>,
-    type: PortfolioType.landing,
+    gridType: GalleryGridType.hero,
   },
   {
-    name: 'Лендинги для HumanIPO',
-    description: 'TODO',
+    title: 'Лендинги для HumanIPO',
     type: PortfolioType.landing,
+    gridType: GalleryGridType.hero,
     task: <>
       <p>
         HumanIPO – быстроразвивающийся и быстроменяющийся стартап. Ниже приведены примеры лендингов для продуктов стартапа на разных этапах развития.
@@ -308,16 +307,16 @@ export const data = [
     ]
   },
   {
-    name: 'Креативы для The Likeness',
-    description: 'TODO',
+    title: 'Креативы для The Likeness',
     type: PortfolioType.creative,
+    gridType: GalleryGridType.normal,
     headerImages: [
       '/images/thelikeness-creative/1.webp',
       '/images/thelikeness-creative/2.webp',
       '/images/thelikeness-creative/3.webp',
       '/images/thelikeness-creative/4.webp',
     ],
-    modalImages: [
+    images: [
       '/images/thelikeness-creative/5.webp',
       '/images/thelikeness-creative/6.webp',
       '/images/thelikeness-creative/7.webp',
@@ -339,7 +338,8 @@ export const data = [
     </>,
   },
   {
-    name: 'Креативы для rebase',
+    title: 'Креативы для rebase',
+    type: PortfolioType.creative,
     task: <>
       <p>Создать креативы для соцсетей платформы rebase.</p>
       <p>Необходимо было учесть использование креативов в разных соцсетях, следовательно, была проведена работа с разными форматами. Также сами креативы были различного типа — посты, карусели, баннеры и т.д.</p>
@@ -348,14 +348,14 @@ export const data = [
       <p>Оформление креативов создавалось на основе дизайна самого продукта на текущий момент (шрифты, цветовая палитра, графические элементы, эффекты и т.д.).</p>
       <p>Ниже представлены примеры креативов из разных стилистических итераций.</p>
     </>,
-    type: PortfolioType.creative,
+    gridType: GalleryGridType.normal,
     headerImages: [
       '/images/rebase-creative/1.webp',
       '/images/rebase-creative/2.webp',
       '/images/rebase-creative/3.webp',
       '/images/rebase-creative/4.webp',
     ],
-    modalImages: [
+    images: [
       '/images/rebase-creative/5.webp',
       '/images/rebase-creative/6.webp',
       '/images/rebase-creative/7.webp',
@@ -369,7 +369,8 @@ export const data = [
     ],
   },
   {
-    name: 'Креативы для Human',
+    title: 'Креативы для Human',
+    type: PortfolioType.creative,
     task: <>
       <p>Создать креативы для соцсетей платформы Human.</p>
       <p>Необходимо было учесть использование креативов в разных соцсетях, следовательно, была проведена работа с разными форматами. Также сами креативы были различного типа — посты, сторис, баннеры и т.д.</p>
@@ -378,14 +379,14 @@ export const data = [
       <p>Оформление креативов создавалось на основе дизайна самого продукта на текущий момент (шрифты, цветовая палитра, графические элементы, эффекты и т.д.).</p>
       <p>Ниже представлены примеры креативов из разных стилистических итераций.</p>
     </>,
-    type: PortfolioType.creative,
+    gridType: GalleryGridType.normal,
     headerImages: [
       '/images/human-creative/1.webp',
       '/images/human-creative/2.webp',
       '/images/human-creative/3.webp',
       '/images/human-creative/4.webp',
     ],
-    modalImages: [
+    images: [
       '/images/human-creative/5.webp',
       '/images/human-creative/6.webp',
       '/images/human-creative/7.webp',
@@ -399,16 +400,16 @@ export const data = [
     ],
   },
   {
-    name: 'Креативы для HumanIPO',
-    description: 'TODO',
+    title: 'Креативы для HumanIPO',
     type: PortfolioType.creative,
+    gridType: GalleryGridType.normal,
     headerImages: [
       '/images/humanipo-creative/1.webp',
       '/images/humanipo-creative/2.webp',
       '/images/humanipo-creative/3.webp',
       '/images/humanipo-creative/4.webp',
     ],
-    modalImages: [
+    images: [
       '/images/humanipo-creative/5.webp',
       '/images/humanipo-creative/6.webp',
       '/images/humanipo-creative/7.webp',
@@ -430,24 +431,37 @@ export const data = [
     </>,
   },
   {
-    name: 'Примеры векторных иллюстраций',
-    description: 'TODO',
+    title: 'Примеры векторных иллюстраций',
+    implementationTitle: <></>,
     type: PortfolioType.illustration,
+    gridType: GalleryGridType.hero,
+    taskTitle: <></>,
+    task: <>
+      <p>На этой странице представлены примеры векторных иллюстраций, бэкграундов и паттернов, выполненных в программе Adobe Illustrator. Больше моих работ можно найти в профиле на Dribbble.</p>
+    </>,
+    implementation: <>
+      <Button asChild variant={"outlined"} className="flex justify-between group min-w-[200px]">
+        <Link href="/#">
+          <span>Dribbble</span>
+          <span className="group-hover:translate-x-[6px] transition-transform">→</span>
+        </Link>
+      </Button>
+    </>,
     headerImages: [
-      '/images/sgraph/1.webp',
-      '/images/sgraph/2.webp',
-      '/images/sgraph/3.webp',
-      '/images/sgraph/4.webp',
+      '/images/illustrations/1.webp',
+      '/images/illustrations/2.webp',
+      '/images/illustrations/3.webp',
+      '/images/illustrations/4.webp',
     ],
-    modalImages: [
-      '/images/sgraph/5.webp',
-      '/images/sgraph/6.webp',
-      '/images/sgraph/7.webp',
-      '/images/sgraph/8.webp',
-      '/images/sgraph/9.webp',
-      '/images/sgraph/10.webp',
-      '/images/sgraph/11.webp',
-      '/images/sgraph/12.webp',
+    images: [
+      '/images/illustrations/5.webp',
+      '/images/illustrations/6.webp',
+      '/images/illustrations/7.webp',
+      '/images/illustrations/8.webp',
+      '/images/illustrations/9.webp',
+      '/images/illustrations/10.webp',
+      '/images/illustrations/11.webp',
+      '/images/illustrations/12.webp',
     ],
   },
 ]

@@ -4,45 +4,18 @@ import { useScroll, animated, useSpringRef, useTransition, useChain, useSpring, 
 import { useHover, useScrollLock } from 'usehooks-ts'
 import styles from './Portfolio.module.css';
 import useMeasure from 'react-use-measure';
-import { PortfolioType, data } from './data';
 import { AnimatedHeading } from './AnimatedHeading';
 import { cn } from '@/lib/utils';
 import Typography from '../Typography';
 import { Button } from '../ui/button';
 import IconClose from '@/icons/close.svg';
+import { GalleryGridType, PortfolioData } from './types';
 
-type PortfolioItemProps = {
-  type: PortfolioType;
-  name: string;
-  task: React.ReactNode;
-  implementation: React.ReactNode;
-  headerImages: string[];
-  modalImages: string[];
-  sections?: {
-    name: React.ReactNode;
-    images: string[]
-  }[]
-}
 
 type PortfolioModalProps = {
-  title: React.ReactNode;
   open?: boolean;
-  task: React.ReactNode;
-  implementation: React.ReactNode;
-  headerImages: string[];
-  images: string[];
-  sections?: {
-    name: React.ReactNode;
-    images: string[]
-  }[]
-  gridType: GalleryGridType;
+  data: PortfolioData;
   onClose?: () => void
-}
-
-enum GalleryGridType {
-  hero = 'hero',
-  normal = 'normal',
-  same = 'same'
 }
 
 const Gallery: React.FC<{ images: string[], gridType: GalleryGridType }> = ({ images = [], gridType = GalleryGridType.normal }) => {
@@ -57,19 +30,13 @@ const Gallery: React.FC<{ images: string[], gridType: GalleryGridType }> = ({ im
 
 const PortfolioModalContent: React.FC<PortfolioModalProps> = ({
   open,
-  title,
-  headerImages,
-  sections,
-  images,
-  task,
-  implementation,
-  gridType,
+  data,
   onClose,
 }) => {
   const transApi = useSpringRef()
-  const transition = useTransition(open ? headerImages : [], {
+  const transition = useTransition(open ? data.headerImages : [], {
     ref: transApi,
-    trail: 400 / data.length,
+    trail: 400 / data.headerImages.length,
     from: { opacity: 0, scale: 0 },
     enter: { opacity: 1, scale: 1 },
     leave: { opacity: 0, scale: 0 },
@@ -86,11 +53,11 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = ({
     >
       <IconClose />
     </Button>
-    <Typography className={cn('container text-title2 text-brown font-bold text-center pt-5 sm:pt-0 mb-5 sm:mb-9 transition-opacity', {
+    <Typography as='h1' className={cn('container text-title2 text-brown font-bold text-center pt-5 sm:pt-0 mb-5 sm:mb-9 transition-opacity', {
       "opacity-1": open,
       "opacity-0": !open
     })}>
-      {title}
+      {data.title}
     </Typography>
     <div className="container grid grid-cols-12 grid-flow-col gap-5">
       <div className="col-start-1 col-end-13 sm:col-start-2 sm:col-end-12">
@@ -104,22 +71,22 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = ({
           ))}
         </div>
         <div className='grid grid-cols-2 gap-5 mt-10 empty:hidden mb-10'>
-          {task && <div>
-            <Typography className='text-title4 text-brown font-bold'>
-              Задача
+          {data.task && <div>
+            <Typography as="h3" className='mb-4 text-title4 text-brown font-bold'>
+              {data.taskTitle || 'Задача'}
             </Typography>
-            {task}
+            {data.task}
           </div>}
-          {implementation && <div>
-            <Typography className='text-title4 text-brown font-bold'>
-              Реализация
+          {data.implementation && <div>
+            <Typography as="h3" className='mb-4 text-title4 text-brown font-bold'>
+              {data.implementationTitle || 'Реализация'}
             </Typography>
-            {implementation}
+            {data.implementation}
           </div>}
         </div>
-        <Gallery gridType={gridType} images={images} />
+        {data.images && <Gallery gridType={data.gridType} images={data.images} />}
         <div className='flex flex-col gap-16'>
-          {sections?.map((section, index) => <div key={index}>
+          {data.sections?.map((section, index) => <div key={index}>
             <Typography className="text-title4 font-bold text-brown text-center mb-4">{section.name}</Typography>
             <Gallery gridType={GalleryGridType.hero} images={section.images} />
           </div>)}
@@ -134,25 +101,7 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = ({
   </div>
 }
 
-const PortfolioTypeToGalleryGridType: Record<PortfolioType, GalleryGridType> = {
-  [PortfolioType.all]: GalleryGridType.hero,
-  [PortfolioType.landing]: GalleryGridType.hero,
-  [PortfolioType.creative]: GalleryGridType.normal,
-  [PortfolioType.product]: GalleryGridType.hero,
-  [PortfolioType.site]: GalleryGridType.hero,
-  [PortfolioType.illustration]: GalleryGridType.normal
-}
-
-
-const PortfolioItem: React.FC<PortfolioItemProps> = ({
-  modalImages,
-  headerImages,
-  name,
-  implementation,
-  task,
-  sections,
-  type
-}) => {
+const PortfolioItem: React.FC<PortfolioData> = (data) => {
   const [wrapperRef, wrapperSize] = useMeasure({ scroll: true });
   const ref = useRef<HTMLDivElement | null>(null);
   const isHover = useHover(ref);
@@ -162,9 +111,9 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({
     autoLock: false
   });
 
-  const animatedImages = useTransition(isHover ? headerImages : [], {
+  const animatedImages = useTransition(isHover ? data.headerImages : [], {
     ref: transApi,
-    trail: 200 / headerImages.length,
+    trail: 200 / data.headerImages.length,
     from: { opacity: 0, scale: 0, },
     enter: { opacity: 1, scale: 1, },
     leave: { opacity: 0, scale: 0, },
@@ -255,14 +204,8 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({
   return <>
     <animated.div style={modalStyles} className="rounded-sm fixed z-10 overflow-hidden">
       <PortfolioModalContent
-        gridType={PortfolioTypeToGalleryGridType[type]}
-        title={name}
+        data={data}
         open={open}
-        headerImages={headerImages}
-        images={modalImages}
-        task={task}
-        implementation={implementation}
-        sections={sections}
         onClose={handleCloseModal}
       />
     </animated.div>
@@ -272,7 +215,7 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({
     }} className="group hover:bg-peach transition-colors cursor-pointer border-t border-peach last-of-type:border-b" onClick={handleOpenModal}>
       <div ref={ref} className="container flex justify-between items-center p-5 rounded-sm overflow-hidden">
         <div className='flex-1 relative'>
-          <AnimatedHeading heading={name} isHover={isHover} className="text-brown" />
+          <AnimatedHeading heading={String(data.title)} isHover={isHover} className="text-brown" />
         </div>
         <div className="hidden sm:flex h-16 gap-3 transform translate-x-2 group-hover:translate-x-0 transition-transform duration-200">
           {animatedImages((style, src) => (

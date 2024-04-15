@@ -132,7 +132,9 @@ const Aside = () => {
 
   return (
     <aside className="md:col-start-10 md:col-end-13 md:sticky top-5 self-start shrink-0 md:order-last flex flex-col gap-6 md:gap-10">
-      <picture className="block size-36 bg-beige rounded-full"></picture>
+      <picture className="block size-36 bg-beige rounded-full overflow-hidden">
+        <img src="/avatar.png" />
+      </picture>
       <nav>
         <ul className="flex flex-col gap-3">
           {navMenuItems.map(item =>
