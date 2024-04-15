@@ -97,7 +97,7 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = ({
         <div className='grid grid-cols-4 gap-1 sm:gap-5'>
           {transition((style, src) => (
             <animated.img
-              className="aspect-square bg-white rounded-lg"
+              className="aspect-square bg-white rounded-lg border border-beige"
               style={style}
               src={src}
             />

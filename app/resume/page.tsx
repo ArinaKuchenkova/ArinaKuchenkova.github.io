@@ -87,9 +87,9 @@ const Resume = () => {
     <div className="container">
       <div className="flex flex-col md:grid md:grid-cols-12 gap-5 pt-10">
         <Aside />
-        <main className="md:col-start-2 md:col-span-8 max-w-[740px] flex flex-col gap-[80px]">
+        <main className="md:col-start-2 md:col-span-8 max-w-[740px] flex flex-col gap-12 md:gap-[80px] mt-10 md:mt-0">
           <section id="about">
-            <Typography size="title2" family="mak" className="text-brown font-bold">Обо мне</Typography>
+            <Typography as="h3" size="title2" family="mak" className="text-brown font-bold mb-5">Обо мне</Typography>
             <p>
               Привет, меня зовут Арина, я занимаюсь UI/UX-дизайном, созданием интерфейсов и графики <strong>более 3-х лет</strong>.
             </p>
@@ -112,7 +112,7 @@ const Resume = () => {
               Опыт работы
             </Typography>
             {worksData.map(work =>
-              <div key={work.name} className="flex flex-col sm:flex-row gap-4 sm:gap-8 mt-8">
+              <div key={work.name} className="flex flex-col sm:flex-row gap-4 sm:gap-8 mt-5 sm:mt-8">
                 <div className="shrink-0 self-start">
                   <Badge>{work.ages}</Badge>
                 </div>
@@ -142,7 +142,7 @@ const Resume = () => {
             <Typography size="title4" className="text-light-brown mt-8 font-bold">
               Hard skills
             </Typography>
-            <div className="flex flex-col gap-3 mt-4">
+            <div className="flex flex-col gap-3 mt-5">
               <span>
                 <b>Создание пользовательских интерфейсов</b> — проектирование и разработка.
               </span>
@@ -209,8 +209,8 @@ const Resume = () => {
               Образование
             </Typography>
             {educationData.map(education =>
-              <div key={education.name} className="flex gap-8 mt-8">
-                <div className="shrink-0">
+              <div key={education.name} className="flex flex-col sm:flex-row gap-4 sm:gap-8 mt-8 sm:mt-8">
+                <div className="shrink-0 self-start">
                   <Badge>{education.ages}</Badge>
                 </div>
                 <div className="flex flex-col gap-4">

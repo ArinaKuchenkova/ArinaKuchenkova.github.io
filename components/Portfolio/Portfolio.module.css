@@ -41,26 +41,26 @@
   will-change: width, height;
 }
 
-.hero > img:nth-child(1) {
+.hero > img:nth-child(8n + 1) {
   grid-column-end: span 4;
   grid-row-end: span 2;
 }
 
-.hero > img:nth-child(2) {
+.hero > img:nth-child(8n + 2) {
   grid-column-end: span 3;
 }
 
-.hero > img:nth-child(4) {
+.hero > img:nth-child(8n + 4) {
   grid-column-end: span 1;
   grid-column-start: 1;
   grid-row-end: span 2;
 }
 
-.hero > img:nth-child(6) {
+.hero > img:nth-child(8n + 6) {
   grid-column-end: span 2;
 }
 
-.hero > img:nth-child(7) {
+.hero > img:nth-child(8n + 7) {
   grid-column-end: span 2;
 }
 

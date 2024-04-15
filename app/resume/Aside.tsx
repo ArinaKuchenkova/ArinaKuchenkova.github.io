@@ -131,7 +131,7 @@ const Aside = () => {
   const activeSectionId = useScrollSpy(navMenuItems.map(i => i.sectionId), 200);
 
   return (
-    <aside className="md:col-start-10 md:col-end-13 md:sticky top-5 self-start shrink-0 md:order-last flex flex-col gap-10">
+    <aside className="md:col-start-10 md:col-end-13 md:sticky top-5 self-start shrink-0 md:order-last flex flex-col gap-6 md:gap-10">
       <picture className="block size-36 bg-beige rounded-full"></picture>
       <nav>
         <ul className="flex flex-col gap-3">
