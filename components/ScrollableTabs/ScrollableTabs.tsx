@@ -25,6 +25,7 @@ export const ScrollableTabs = <T extends string,>({ items, activeTab, onChange, 
   useEffect(() => {
     const active = itemsRefs.current.find(i => i.getAttribute('data-key') === activeTab);
     const rect = active?.getBoundingClientRect();
+
     if (!rect) {
       return
     }
@@ -32,7 +33,6 @@ export const ScrollableTabs = <T extends string,>({ items, activeTab, onChange, 
       left: rect.left - 16,
       behavior: 'smooth'
     })
-    console.log(active);
   }, [activeTab])
 
   return (
@@ -50,7 +50,7 @@ export const ScrollableTabs = <T extends string,>({ items, activeTab, onChange, 
               itemsRefs.current[index] = element
             }
           }}
-          key={item.key}
+          key={index}
         >
           {item.label}
         </button>

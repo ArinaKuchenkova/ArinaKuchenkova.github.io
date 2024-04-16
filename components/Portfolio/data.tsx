@@ -443,7 +443,7 @@ export const data: PortfolioData[] = [
     </>,
     implementation: <>
       <Button asChild variant={"outlined"} className="flex justify-between group min-w-[200px] font-normal">
-        <Link href="/#">
+        <Link href="https://dribbble.com/arina_art" target="_blank">
           <span className="">Dribbble</span>
           <span className="group-hover:translate-x-[6px] transition-transform">→</span>
         </Link>

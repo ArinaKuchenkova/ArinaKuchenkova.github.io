@@ -16,7 +16,7 @@ export const PortfolioSection = () => {
       {/* <SectionHeading className="text-with-prikol uppercase">
         Портфолио
       </SectionHeading> */}
-      <ScrollableTabs activeTab={category} onChange={setCategory} items={dataCategories.map(i => ({
+      <ScrollableTabs activeTab={category} onChange={setCategory} items={dataCategories.map((i) => ({
         key: String(i),
         label: categoryNameByType[i]
       }))} />

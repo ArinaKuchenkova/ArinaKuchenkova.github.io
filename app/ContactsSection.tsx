@@ -6,7 +6,7 @@ import { ComponentPropsWithoutRef } from "react";
 import { SectionHeading } from "./SectionHeading";
 
 const ContactsBadge: React.FC<{ href: string, children: React.ReactNode }> = ({ href, children }) =>
-  <Badge as={Link} href={href} size="large" className="group sm:min-w-[200px] max-w-52 text-background flex justify-between">
+  <Badge as={Link} href={href} target="_blank" size="large" className="group sm:min-w-[200px] max-w-52 text-background flex justify-between">
     <span>{children}</span>
     <span className="group-hover:translate-x-[6px] transition-transform">→</span>
   </Badge>
@@ -14,26 +14,26 @@ const ContactsBadge: React.FC<{ href: string, children: React.ReactNode }> = ({ 
 const Contacts = () => {
   return <nav className="flex flex-col justify-between mt-10 lg:grid lg:grid-cols-12 gap-3">
     <div className="flex flex-col gap-3 col-start-1 col-end-3">
-      <ContactsBadge href="#">
+      <ContactsBadge href="https://www.behance.net/arina-art">
         Behance
       </ContactsBadge>
-      <ContactsBadge href="#">
+      <ContactsBadge href="https://dribbble.com/arina_art">
         Dribbble
       </ContactsBadge>
     </div>
     <div className="flex flex-col gap-3 col-start-4 col-end-6">
-      <ContactsBadge href="#">
+      <ContactsBadge href="https://career.habr.com/chrystarina">
         Хабр карьера
       </ContactsBadge>
-      <ContactsBadge href="#">
+      <ContactsBadge href="https://spb.hh.ru/resume/633c4a8cff096fb4290039ed1f787554544158">
         hh.ru
       </ContactsBadge>
     </div>
     <div className="flex flex-col gap-3 col-start-7 col-end-9">
-      <ContactsBadge href="#">
+      <ContactsBadge href="https://t.me/chrysta_rina">
         Telegram
       </ContactsBadge>
-      <ContactsBadge href="#">
+      <ContactsBadge href="mailto:kuchenkova.av@yandex.ru">
         Email
       </ContactsBadge>
     </div>

@@ -151,16 +151,16 @@ const Aside = () => {
       <TypographyLink className="self-start animated-underline" href="/#portfolio">Портфолио →</TypographyLink>
       <div className="flex flex-col gap-4">
         <div className="flex gap-2">
-          <Link href="#">
+          <Link href="mailto:kuchenkova.av@yandex.ru">
             <IconEmail className="size-8 text-brown hover:text-light-brown transition-colors" />
           </Link>
-          <Link href="#">
+          <Link href="https://t.me/chrysta_rina" target="_blank">
             <IconTelegram className="size-8 text-brown hover:text-light-brown transition-colors" />
           </Link>
-          <Link href="#">
+          <Link href="https://www.behance.net/arina-art" target="_blank">
             <IconBehance className="size-8 text-brown hover:text-light-brown transition-colors" />
           </Link>
-          <Link href="#">
+          <Link href="https://dribbble.com/arina_art" target="_blank">
             <IconDribbble className="size-8 text-brown hover:text-light-brown transition-colors" />
           </Link>
         </div>

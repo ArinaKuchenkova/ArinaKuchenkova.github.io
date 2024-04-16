@@ -234,9 +234,9 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
 
 export const Portfolio: React.FC<{ data: any[] }> = ({ data }) => {
   return <div className='mt-10'>
-    {data.map(item =>
+    {data.map((item, index) =>
       <PortfolioItem
-        key={item.name}
+        key={index}
         {...item}
       />
     )}
