@@ -25,7 +25,7 @@ const Header = () => {
       "fixed top-0 left-0 bg-background z-50": menuOpen
     })}>
       <Typography as={Link} href="/" size="title4" family="mak" className="text-brown font-bold">@rina</Typography>
-      <MenuIcon className={cn("sm:hidden", {
+      <MenuIcon aria-label="Menu" className={cn("sm:hidden", {
         "hidden": pathname.startsWith('/resume'),
       })} open={menuOpen} onClick={() => {
         if (!menuOpen) {
