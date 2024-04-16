@@ -80,7 +80,7 @@ export const AnimatedHeading: React.FC<{
           <Typography
             as="span"
             style={{ '--index': index } as CSSProperties}
-            className={cn("inline-block pointer-events-none text-title2", styles.letter)}
+            className={cn("inline-block pointer-events-none text-title3 sm:text-title2", styles.letter)}
             key={index}>
             {ch}
           </Typography>

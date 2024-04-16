@@ -69,7 +69,7 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = memo(({
             />
           ))}
         </div>
-        <div className='grid grid-cols-2 gap-5 mt-10 empty:hidden mb-10'>
+        <div className='grid sm:grid-cols-2 gap-5 mt-10 empty:hidden mb-10'>
           {data.task && <div>
             <Typography as="h3" className='mb-4 text-title4 text-brown font-bold'>
               {data.taskTitle || 'Задача'}
