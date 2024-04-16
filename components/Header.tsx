@@ -9,14 +9,11 @@ import IconEmail from '@/icons/email.svg';
 import IconBehance from '@/icons/behance.svg';
 import IconTelegram from '@/icons/telegram.svg';
 import IconDribbble from '@/icons/dribbble.svg';
-import { useScrollLock } from "usehooks-ts";
+import { lock, unlock } from 'tua-body-scroll-lock';
 
 const Header = () => {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const { lock, unlock } = useScrollLock({
-    autoLock: false
-  });
 
   const handleLinkClick = () => {
     setMenuOpen(false);

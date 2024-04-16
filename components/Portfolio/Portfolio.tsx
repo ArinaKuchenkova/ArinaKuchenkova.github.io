@@ -1,16 +1,15 @@
 "use client";
-import React, { Ref, RefObject, useCallback, useEffect, useRef, useState } from 'react';
-import { useScroll, animated, useSpringRef, useTransition, useChain, useSpring, config, useTrail } from 'react-spring';
-import { useHover, useScrollLock } from 'usehooks-ts'
+import React, { memo, useCallback, useRef, useState } from 'react';
+import { animated, useSpringRef, useTransition, useChain, useSpring, config, useTrail } from 'react-spring';
+import { useHover } from 'usehooks-ts'
 import styles from './Portfolio.module.css';
-import useMeasure from 'react-use-measure';
 import { AnimatedHeading } from './AnimatedHeading';
 import { cn } from '@/lib/utils';
 import Typography from '../Typography';
 import { Button } from '../ui/button';
 import IconClose from '@/icons/close.svg';
 import { GalleryGridType, PortfolioData } from './types';
-
+import { lock, unlock } from 'tua-body-scroll-lock';
 
 type PortfolioModalProps = {
   open?: boolean;
@@ -28,7 +27,7 @@ const Gallery: React.FC<{ images: string[], gridType: GalleryGridType }> = ({ im
   </div>
 }
 
-const PortfolioModalContent: React.FC<PortfolioModalProps> = ({
+const PortfolioModalContent: React.FC<PortfolioModalProps> = memo(({
   open,
   data,
   onClose,
@@ -99,17 +98,13 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = ({
       </div>
     </div>
   </div>
-}
+})
 
 const PortfolioItem: React.FC<PortfolioData> = (data) => {
-  const [wrapperRef, wrapperSize] = useMeasure({ scroll: true });
   const ref = useRef<HTMLDivElement | null>(null);
   const isHover = useHover(ref);
   const transApi = useSpringRef()
   const [open, setOpen] = useState(false);
-  const { lock, unlock } = useScrollLock({
-    autoLock: false
-  });
 
   const animatedImages = useTransition(isHover ? data.headerImages : [], {
     ref: transApi,
@@ -139,12 +134,18 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
       left: 0,
       config: config.stiff,
     }),
-    [wrapperSize.height, wrapperSize.width]
+    []
   )
 
   const handleOpenModal = useCallback(() => {
-    setOpen(true);
+    if (!ref.current) {
+      return
+    }
+    console.log('handle open modal');
     lock();
+    // lock();
+    setOpen(true);
+    const wrapperSize = ref.current.getBoundingClientRect();
     api.set({
       opacity: 1,
       background: 'var(--color-peach)',
@@ -167,14 +168,20 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
         } as any)
       },
     })
-  }, [api, lock, wrapperSize.height, wrapperSize.left, wrapperSize.top, wrapperSize.width])
+  }, [api, ref])
 
   const handleCloseModal = useCallback(async () => {
+    if (!ref.current) {
+      return
+    }
+    console.log('close');
+    unlock();
     setOpen(false);
     api.set({
       height: window.innerHeight,
       width: window.innerWidth,
     } as any)
+    const wrapperSize = ref.current.getBoundingClientRect();
     await api.start({
       left: wrapperSize.left,
       top: wrapperSize.top,
@@ -198,8 +205,7 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
         })
       },
     })
-    unlock()
-  }, [api, unlock, wrapperSize.height, wrapperSize.left, wrapperSize.top, wrapperSize.width])
+  }, [api, ref])
 
   return <>
     <animated.div style={modalStyles} className="rounded-sm fixed z-10 overflow-hidden">
@@ -210,7 +216,6 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
       />
     </animated.div>
     <div ref={element => {
-      wrapperRef(element);
       ref.current = element;
     }} className="group hover:bg-peach transition-colors cursor-pointer border-t border-peach last-of-type:border-b" onClick={handleOpenModal}>
       <div ref={ref} className="container flex justify-between items-center p-5 rounded-sm overflow-hidden">

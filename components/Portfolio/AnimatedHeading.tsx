@@ -1,4 +1,4 @@
-import { CSSProperties, useCallback, useEffect, useRef, useState } from "react"
+import { CSSProperties, memo, useCallback, useEffect, useRef, useState } from "react"
 import { SpringConfig, animated, useSpringRef, useTrail, useTransition } from "react-spring"
 import styles from './AnimatedHeading.module.css';
 import { cn } from "@/lib/utils";
@@ -12,8 +12,12 @@ const config: SpringConfig = {
   damping: 0,
 }
 
-export const AnimatedHeading = ({ heading = 'Hello world', isHover = false, className = "" }) => {
-  const letters = heading.split('');
+export const AnimatedHeading: React.FC<{
+  heading: string,
+  isHover: boolean;
+  className?: string;
+}> = memo(({ heading = 'Hello world', isHover = false, className = "" }) => {
+  const letters = heading.split('') as string[];
   const [isAnimating, setIsAnimating] = useState(false);
 
   // const [heh, api] = useTrail(letters.length, () => ({
@@ -84,4 +88,4 @@ export const AnimatedHeading = ({ heading = 'Hello world', isHover = false, clas
       })}
     </div>
   )
-}
+})
