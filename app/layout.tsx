@@ -4,6 +4,12 @@ import "./globals.css";
 import Header from "@/components/Header";
 import localFont from 'next/font/local'
 import clsx from "clsx";
+import { PHProvider } from './providers'
+import dynamic from 'next/dynamic'
+
+const PostHogPageView = dynamic(() => import('./PostHogPageView'), {
+  ssr: false,
+})
 
 // Font files can be colocated inside of `pages`
 const makFont = localFont({
@@ -53,10 +59,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={clsx(makFont.variable, evolventaFont.variable)}>
-        <Header />
-        {children}
-      </body>
+      <PHProvider>
+        <body className={clsx(makFont.variable, evolventaFont.variable)}>
+          <PostHogPageView />
+          <Header />
+          {children}
+        </body>
+      </PHProvider>
     </html>
   );
 }

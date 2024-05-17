@@ -14,6 +14,10 @@ const nextConfig = {
     });
     return config;
   },
+  env: {
+    NEXT_PUBLIC_POSTHOG_KEY: 'phc_elppgP1N5F8L3j3XYlamzXBhLjvKgFiRh02NeD5SUDB',
+    NEXT_PUBLIC_POSTHOG_HOST: 'https://eu.i.posthog.com'
+  },
   experimental: {
     turbo: {
       rules: {
