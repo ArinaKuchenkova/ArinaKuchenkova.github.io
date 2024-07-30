@@ -37,14 +37,14 @@ export const AboutSection = () => {
           Практикую простой дизайн сложных продуктов и доступные дизайн-решения.
           Ориентируюсь на понятность, удобство и аккуратность.
         </Typography>
-        <Card className="bg-beige mt-10">
+        {/* <Card className="bg-beige mt-10">
           <div className="flex items-baseline gap-3">
             <span>👋</span>
             <span>
               <strong>Ищу работу</strong>, рассматриваю удалённый или гибридный формат.
             </span>
           </div>
-        </Card>
+        </Card> */}
       </div>
       <WidthInfo className="md:row-start-1 col-start-1 col-end-3 md:col-end-2 md:-mr-5" />
       <AboutItem
