@@ -23,7 +23,7 @@ const Gallery: React.FC<{ images: string[], gridType: GalleryGridType }> = ({ im
     [styles.normal]: gridType === GalleryGridType.normal,
     [styles.same]: gridType === GalleryGridType.same,
   })}>
-    {images.map(src => <img src={src} loading='lazy' key={src} className="rounded-lg w-full h-full object-cover border border-beige" />)}
+    {images.map((src, index) => <img alt={`Portfolio image #${index + 1}`} src={src} loading='lazy' key={src} className="rounded-lg w-full h-full object-cover border border-beige" />)}
   </div>
 }
 
@@ -100,6 +100,14 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = memo(({
   </div>
 })
 
+const preloadImage = (src: string) => 
+  new Promise((resolve, reject) => {
+    const image = new Image()
+    image.onload = resolve
+    image.onerror = reject
+    image.src = src
+  })
+
 const PortfolioItem: React.FC<PortfolioData> = (data) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const isHover = useHover(ref);
@@ -137,10 +145,15 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
     []
   )
 
-  const handleOpenModal = useCallback(() => {
+  const handleOpenModal = useCallback(async () => {
     if (!ref.current) {
       return
     }
+
+    await Promise.all([
+      ...(data.images || []).slice(0, 4).map(preloadImage)
+    ])
+
     console.log('handle open modal');
     lock();
     // lock();
@@ -168,7 +181,7 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
         } as any)
       },
     })
-  }, [api, ref])
+  }, [data?.images, api, ref])
 
   const handleCloseModal = useCallback(async () => {
     if (!ref.current) {
@@ -223,8 +236,8 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
           <AnimatedHeading heading={String(data.title)} isHover={isHover} className="text-brown" />
         </div>
         <div className="hidden sm:flex h-16 gap-3 transform translate-x-2 group-hover:translate-x-0 transition-transform duration-200">
-          {animatedImages((style, src) => (
-            <animated.img style={style} className="size-16 rounded-lg" alt="heh" src={src} />
+          {animatedImages((style, src, _, index) => (
+            <animated.img style={style} className="size-16 rounded-lg" alt={`Preview image #${index + 1} for ${data.title}`} src={src} />
           ))}
         </div>
       </div>
