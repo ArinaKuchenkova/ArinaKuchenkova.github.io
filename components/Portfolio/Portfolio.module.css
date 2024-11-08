@@ -34,6 +34,7 @@
   height: 100%;
   width: 100%;
   grid-template-columns: repeat(4, minmax(100px, 1fr));
+  grid-template-rows: 230px;
   grid-gap: 25px;
   padding: 25px;
   border-radius: 5px;

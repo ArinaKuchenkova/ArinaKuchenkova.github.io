@@ -12,6 +12,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "fslightbox-react": "^1.7.6",
     "next": "14.1.4",
     "posthog-js": "^1.131.4",
     "react": "^18",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
+    "@types/fslightbox-react": "^1.7.8",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

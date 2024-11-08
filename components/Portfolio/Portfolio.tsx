@@ -10,6 +10,7 @@ import { Button } from '../ui/button';
 import IconClose from '@/icons/close.svg';
 import { GalleryGridType, PortfolioData } from './types';
 import { lock, unlock } from 'tua-body-scroll-lock';
+import FsLightbox from 'fslightbox-react';
 
 type PortfolioModalProps = {
   open?: boolean;
@@ -17,14 +18,31 @@ type PortfolioModalProps = {
   onClose?: () => void
 }
 
+
 const Gallery: React.FC<{ images: string[], gridType: GalleryGridType }> = ({ images = [], gridType = GalleryGridType.normal }) => {
-  return <div className={cn("grid grid-cols-4 gap-1 sm:gap-5", styles.gallery, {
-    [styles.hero]: gridType === GalleryGridType.hero,
-    [styles.normal]: gridType === GalleryGridType.normal,
-    [styles.same]: gridType === GalleryGridType.same,
-  })}>
-    {images.map((src, index) => <img alt={`Portfolio image #${index + 1}`} src={src} loading='lazy' key={src} className="rounded-lg w-full h-full object-cover border border-beige" />)}
-  </div>
+    const [currentSlice, setCurrentSlice] = useState<undefined | number>(undefined);
+    const [toggler, setToggler] = useState(false);
+
+    return (
+      <>
+        <div className={cn("grid grid-cols-4 gap-1 sm:gap-5", styles.gallery, {
+          [styles.hero]: gridType === GalleryGridType.hero,
+          [styles.normal]: gridType === GalleryGridType.normal,
+          [styles.same]: gridType === GalleryGridType.same,
+        })}>
+          {images.map((src, index) => <img onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setToggler(prev => !prev)
+            setCurrentSlice(index + 1);
+          }} alt={`Portfolio image #${index + 1}`} src={src} loading='lazy' key={src} className="rounded-lg w-full h-full object-cover border border-beige" />)}
+        </div>
+        <FsLightbox toggler={toggler} sources={images} slide={currentSlice} onClose={(e) => {
+          console.log('close');
+          setCurrentSlice(undefined);
+        }}/>
+      </>
+  )
 }
 
 const PortfolioModalContent: React.FC<PortfolioModalProps> = memo(({
@@ -100,8 +118,12 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = memo(({
   </div>
 })
 
-const preloadImage = (src: string) => 
+const preloadImage = (src?: string) => 
   new Promise((resolve, reject) => {
+    if (!src) {
+      resolve(null);
+      return;
+    }
     const image = new Image()
     image.onload = resolve
     image.onerror = reject
@@ -149,10 +171,6 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
     if (!ref.current) {
       return
     }
-
-    await Promise.all([
-      ...(data.images || []).slice(0, 4).map(preloadImage)
-    ])
 
     console.log('handle open modal');
     lock();
@@ -230,6 +248,8 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
     </animated.div>
     <div ref={element => {
       ref.current = element;
+    }} onMouseOver={() => {
+      (data.images || []).slice(0, 4).map(preloadImage)
     }} className="group hover:bg-peach transition-colors cursor-pointer border-t border-peach last-of-type:border-b" onClick={handleOpenModal}>
       <div ref={ref} className="container flex justify-between items-center p-5 rounded-sm overflow-hidden">
         <div className='flex-1 relative'>
