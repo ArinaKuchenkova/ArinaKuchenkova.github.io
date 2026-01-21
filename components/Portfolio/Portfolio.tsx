@@ -84,6 +84,7 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = memo(({
         <div className='grid grid-cols-4 gap-1 sm:gap-5'>
           {transition((style, image) => (
             <animated.img
+              key={image?.url}
               className="aspect-square bg-white rounded-lg border border-beige"
               style={style}
               src={`${NEXT_PUBLIC_IMAGES_PREFIX}${image!.url}`}
