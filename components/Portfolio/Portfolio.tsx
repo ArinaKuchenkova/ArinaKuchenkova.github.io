@@ -1,6 +1,6 @@
 "use client";
-import React, { memo, useCallback, useRef, useState } from 'react';
-import { animated, useSpringRef, useTransition, useChain, useSpring, config, useTrail } from 'react-spring';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { animated, useSpringRef, useTransition, useChain, useSpring, config, useTrail, useSprings } from 'react-spring';
 import { useHover } from 'usehooks-ts'
 import styles from './Portfolio.module.css';
 import { AnimatedHeading } from './AnimatedHeading';
@@ -8,40 +8,43 @@ import { cn } from '@/lib/utils';
 import Typography from '../Typography';
 import { Button } from '../ui/button';
 import IconClose from '@/icons/close.svg';
-import { GalleryGridType, PortfolioData } from './types';
 import { lock, unlock } from 'tua-body-scroll-lock';
 import FsLightbox from 'fslightbox-react';
+import type { PortfolioItem as PortfolioItemType } from '@/types/strapi';
+import { BlocksRenderer } from '@strapi/blocks-react-renderer';
+import { GalleryGridType } from '@/graphql/generated';
+import { NEXT_PUBLIC_IMAGES_PREFIX, NEXT_PUBLIC_STRAPI_URL } from '@/lib/env';
+import Link from 'next/link';
 
 type PortfolioModalProps = {
   open?: boolean;
-  data: PortfolioData;
+  data: PortfolioItemType;
   onClose?: () => void
 }
 
+const Gallery: React.FC<{ images: string[], gridType: GalleryGridType }> = ({ images = [], gridType = GalleryGridType.simple }) => {
+  const [currentSlice, setCurrentSlice] = useState<undefined | number>(undefined);
+  const [toggler, setToggler] = useState(false);
 
-const Gallery: React.FC<{ images: string[], gridType: GalleryGridType }> = ({ images = [], gridType = GalleryGridType.normal }) => {
-    const [currentSlice, setCurrentSlice] = useState<undefined | number>(undefined);
-    const [toggler, setToggler] = useState(false);
-
-    return (
-      <>
-        <div className={cn("grid grid-cols-4 gap-1 sm:gap-5", styles.gallery, {
-          [styles.hero]: gridType === GalleryGridType.hero,
-          [styles.normal]: gridType === GalleryGridType.normal,
-          [styles.same]: gridType === GalleryGridType.same,
-        })}>
-          {images.map((src, index) => <img onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setToggler(prev => !prev)
-            setCurrentSlice(index + 1);
-          }} alt={`Portfolio image #${index + 1}`} src={src} loading='lazy' key={src} className="rounded-lg w-full h-full object-cover border border-beige" />)}
-        </div>
-        <FsLightbox toggler={toggler} sources={images} slide={currentSlice} onClose={(e) => {
-          console.log('close');
-          setCurrentSlice(undefined);
-        }}/>
-      </>
+  return (
+    <>
+      <div className={cn("grid grid-cols-4 gap-1 sm:gap-5", styles.gallery, {
+        [styles.hero]: gridType === GalleryGridType.hero,
+        [styles.normal]: gridType === GalleryGridType.normal,
+        [styles.simple]: gridType === GalleryGridType.simple,
+      })}>
+        {images.map((src, index) => <img onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setToggler(prev => !prev)
+          setCurrentSlice(index + 1);
+        }} alt={`Portfolio image #${index + 1}`} src={`${src}`} loading='lazy' key={src} className="rounded-lg w-full h-full object-cover border border-beige" />)}
+      </div>
+      <FsLightbox toggler={toggler} sources={images} slide={currentSlice} onClose={(e) => {
+        console.log('close');
+        setCurrentSlice(undefined);
+      }}/>
+    </>
   )
 }
 
@@ -51,15 +54,17 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = memo(({
   onClose,
 }) => {
   const transApi = useSpringRef()
-  const transition = useTransition(open ? data.headerImages : [], {
+  const transition = useTransition(open ? data.previewImages : [], {
     ref: transApi,
-    trail: 400 / data.headerImages.length,
+    trail: 400 / data.previewImages.length,
     from: { opacity: 0, scale: 0 },
     enter: { opacity: 1, scale: 1 },
     leave: { opacity: 0, scale: 0 },
   })
 
   useChain([transApi], [open ? 0.1 : 0])
+
+  console.log(data.content)
 
   return <div className="w-screen h-screen overflow-y-auto pb-5 sm:pb-10 relative pt-5 sm:pt-20">
     <Button
@@ -79,37 +84,53 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = memo(({
     <div className="container grid grid-cols-12 grid-flow-col gap-5">
       <div className="col-start-1 col-end-13 sm:col-start-2 sm:col-end-12">
         <div className='grid grid-cols-4 gap-1 sm:gap-5'>
-          {transition((style, src) => (
+          {transition((style, image) => (
             <animated.img
               className="aspect-square bg-white rounded-lg border border-beige"
               style={style}
-              src={src}
+              src={`${NEXT_PUBLIC_IMAGES_PREFIX}${image!.url}`}
             />
           ))}
         </div>
-        <div className='grid sm:grid-cols-2 gap-5 mt-10 empty:hidden mb-10'>
-          {data.task && <div>
-            <Typography as="h3" className='mb-4 text-title4 text-brown font-bold'>
-              {data.taskTitle || 'Задача'}
-            </Typography>
-            {data.task}
-          </div>}
-          {data.implementation && <div>
-            <Typography as="h3" className='mb-4 text-title4 text-brown font-bold'>
-              {data.implementationTitle || 'Реализация'}
-            </Typography>
-            {data.implementation}
-          </div>}
-        </div>
-        {data.images && <Gallery gridType={data.gridType} images={data.images} />}
-        <div className='flex flex-col gap-16'>
-          {data.sections?.map((section, index) => <div key={index}>
-            <Typography className="text-title4 font-bold text-brown text-center mb-4">{section.name}</Typography>
-            <Gallery gridType={GalleryGridType.hero} images={section.images} />
-          </div>)}
+        {data.links && data.links.length > 0 && <div className='inline-grid auto-cols-max grid-flow-row gap-2 mt-6'>
+          {data.links.map(link => 
+            <Button key={link?.id} asChild variant={"outlined"} className="flex justify-between group min-w-[200px] font-normal">
+              <Link href={link?.url || '#'} target="_blank" rel="noopener noreferrer">
+                <span className="">{link?.label}</span>
+                <span className="group-hover:translate-x-[6px] transition-transform ml-3">→</span>
+              </Link>
+            </Button>
+          )}
+        </div>}
+        <div className='mt-10 empty:hidden flex flex-col gap-10'>
+          {data.content?.map(content => {
+            if (!content) {
+              return null
+            }
+            switch (content.__typename) {
+              case 'ComponentProjectTextBlock': {
+                return (
+                  <div>
+                    {content.title && <Typography as="h3" className='mb-4 text-title4 text-brown font-bold'>
+                      {content.title}
+                    </Typography>}
+                    {content.content && <div className={styles.content}>
+                      <BlocksRenderer content={content.content}/>
+                    </div>}
+                  </div>
+                )
+              }
+              case 'ComponentProjectGallery': {
+                return <Gallery gridType={content.layout!} images={content.images?.map(i => `${NEXT_PUBLIC_IMAGES_PREFIX}${i!.url}`) || []} />
+              }
+              default: {
+                return null
+              }
+            }
+          })}
         </div>
       </div>
-      <div className='pt-8 col-start-1 col-end-13 flex items-center justify-center'>
+      <div className='col-start-1 col-end-13 flex items-center justify-center'>
         <Button onClick={onClose} variant={'ghost'} className='text-brown self-center'>
           Закрыть
         </Button>
@@ -118,35 +139,61 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = memo(({
   </div>
 })
 
-const preloadImage = (src?: string) => 
-  new Promise((resolve, reject) => {
-    if (!src) {
-      resolve(null);
-      return;
-    }
-    const image = new Image()
-    image.onload = resolve
-    image.onerror = reject
-    image.src = src
-  })
+const imageCache = new Map<string, HTMLImageElement>();
 
-const PortfolioItem: React.FC<PortfolioData> = (data) => {
+export const preloadImage = (src: string) => {
+  if (imageCache.has(src)) {
+    const img = imageCache.get(src)!;
+    return img.complete
+      ? Promise.resolve(img)
+      : new Promise((res, rej) => {
+          img.onload = () => res(img);
+          img.onerror = rej;
+        });
+  }
+
+  const img = new Image();
+  imageCache.set(src, img);
+
+  return new Promise((res, rej) => {
+    img.onload = () => res(img);
+    img.onerror = rej;
+    img.src = src;
+  });
+};
+
+const getImageSrc = (src: string) => {
+  if (!imageCache.has(src)) {
+    const img = new Image();
+    img.src = src;
+    imageCache.set(src, img);
+  }
+  return imageCache.get(src)!.src;
+};
+
+
+const PortfolioItem: React.FC<PortfolioItemType> = (data) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const isHover = useHover(ref);
   const transApi = useSpringRef()
   const [open, setOpen] = useState(false);
 
-  const animatedImages = useTransition(isHover ? data.headerImages : [], {
-    ref: transApi,
-    trail: 200 / data.headerImages.length,
-    from: { opacity: 0, scale: 0, },
-    enter: { opacity: 1, scale: 1, },
-    leave: { opacity: 0, scale: 0, },
-    reverse: true,
+  const [springs, previewApi] = useSprings(data.previewImages.length, index => ({
+    opacity: 0,
+    scale: 0.2,
     config: {
-      duration: 200,
-    }
-  })
+      tension: 320,
+      friction: 26,
+    },
+  }));
+
+  useEffect(() => {
+    previewApi.start(index => ({
+      opacity: isHover ? 1 : 0,
+      scale: isHover ? 1 : 0.2,
+      delay: isHover ? 50 + index * 60 : 50,
+    }));
+  }, [isHover, previewApi]);
 
   useChain([transApi], [
     0,
@@ -174,7 +221,6 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
 
     console.log('handle open modal');
     lock();
-    // lock();
     setOpen(true);
     const wrapperSize = ref.current.getBoundingClientRect();
     api.set({
@@ -199,7 +245,7 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
         } as any)
       },
     })
-  }, [data?.images, api, ref])
+  }, [api, ref])
 
   const handleCloseModal = useCallback(async () => {
     if (!ref.current) {
@@ -238,6 +284,19 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
     })
   }, [api, ref])
 
+  const preloadedRef = useRef(false);
+
+  const handleMouseEnter = () => {
+    if (preloadedRef.current) return;
+    preloadedRef.current = true;
+
+    const gallery = data?.content?.find(i => i?.__typename === 'ComponentProjectGallery');
+    // @ts-ignore
+    gallery?.images?.slice(0, 4).forEach(image => {
+      preloadImage(`${NEXT_PUBLIC_IMAGES_PREFIX}${image?.url}`);
+    });
+  };
+
   return <>
     <animated.div style={modalStyles} className="rounded-sm fixed z-10 overflow-hidden">
       <PortfolioModalContent
@@ -248,16 +307,20 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
     </animated.div>
     <div ref={element => {
       ref.current = element;
-    }} onMouseOver={() => {
-      (data.images || []).slice(0, 4).map(preloadImage)
-    }} className="group hover:bg-peach transition-colors cursor-pointer border-t border-peach last-of-type:border-b" onClick={handleOpenModal}>
+    }} onMouseEnter={handleMouseEnter} className="group hover:bg-peach transition-colors cursor-pointer border-t border-peach last-of-type:border-b" onClick={handleOpenModal}>
       <div ref={ref} className="container flex justify-between items-center p-5 rounded-sm overflow-hidden">
         <div className='flex-1 relative'>
           <AnimatedHeading heading={String(data.title)} isHover={isHover} className="text-brown" />
         </div>
         <div className="hidden sm:flex h-16 gap-3 transform translate-x-2 group-hover:translate-x-0 transition-transform duration-200">
-          {animatedImages((style, src, _, index) => (
-            <animated.img style={style} className="size-16 rounded-lg" alt={`Preview image #${index + 1} for ${data.title}`} src={src} />
+          {springs.map((style, index) => (
+            <animated.img
+              key={data.previewImages?.[index]?.url}
+              src={`${NEXT_PUBLIC_IMAGES_PREFIX}${data.previewImages?.[index]?.url}`}
+              style={style}
+              className="size-16 rounded-lg"
+              alt={`Preview image #${index + 1} for ${data.title}`}
+            />
           ))}
         </div>
       </div>
@@ -265,7 +328,7 @@ const PortfolioItem: React.FC<PortfolioData> = (data) => {
   </>
 }
 
-export const Portfolio: React.FC<{ data: any[] }> = ({ data }) => {
+export const Portfolio: React.FC<{ data: PortfolioItemType[] }> = ({ data }) => {
   return <div className='mt-10'>
     {data.map((item, index) =>
       <PortfolioItem

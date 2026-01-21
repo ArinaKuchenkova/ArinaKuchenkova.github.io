@@ -14,11 +14,11 @@ const ContactsBadge: React.FC<{ href: string, children: React.ReactNode }> = ({ 
 const Contacts = () => {
   return <nav className="flex flex-col justify-between mt-10 lg:grid lg:grid-cols-12 gap-3">
     <div className="flex flex-col gap-3 col-start-1 col-end-3">
-      <ContactsBadge href="https://www.behance.net/arina-art">
-        Behance
+      <ContactsBadge href="https://t.me/chrysta_rina">
+        Telegram
       </ContactsBadge>
-      <ContactsBadge href="https://dribbble.com/arina_art">
-        Dribbble
+      <ContactsBadge href="mailto:kuchenkova.av@yandex.ru">
+        Email
       </ContactsBadge>
     </div>
     <div className="flex flex-col gap-3 col-start-4 col-end-6">
@@ -30,11 +30,11 @@ const Contacts = () => {
       </ContactsBadge>
     </div>
     <div className="flex flex-col gap-3 col-start-7 col-end-9">
-      <ContactsBadge href="https://t.me/chrysta_rina">
-        Telegram
+      <ContactsBadge href="https://www.behance.net/arina-art">
+        Behance
       </ContactsBadge>
-      <ContactsBadge href="mailto:kuchenkova.av@yandex.ru">
-        Email
+      <ContactsBadge href="https://dribbble.com/arina_art">
+        Dribbble
       </ContactsBadge>
     </div>
     <div className="flex flex-col gap-3 col-start-10 col-end-12">

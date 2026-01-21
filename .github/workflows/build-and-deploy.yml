@@ -30,6 +30,10 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run build
+        env:
+          NEXT_PUBLIC_STRAPI_URL: ${{ vars.NEXT_PUBLIC_STRAPI_URL }}
+          NEXT_PUBLIC_IMAGES_PREFIX: ${{ vars.NEXT_PUBLIC_IMAGES_PREFIX }}
+          STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
         run: npm run build && touch ./out/.nojekyll && echo 'arina.pw' > ./out/CNAME
 
       - name: Deploy 🚀

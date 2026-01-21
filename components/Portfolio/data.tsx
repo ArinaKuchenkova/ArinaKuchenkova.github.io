@@ -1,8 +1,8 @@
 import React from "react"
 import { List, ListItem } from "../List/List"
-import { GalleryGridType, PortfolioData } from "./types";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { GalleryGridType } from "@/graphql/generated";
 
 export enum PortfolioType {
   all = 'all',
@@ -13,10 +13,10 @@ export enum PortfolioType {
   illustration = 'illustration',
 }
 
-export const data: PortfolioData[] = [
+export const data = [
   {
     title: 'Web3 приложение Human',
-    gridType: GalleryGridType.hero,
+    gridType: GalleryGridType,
     type: PortfolioType.product,
     taskTitle: "О проекте",
     implementationTitle: "С чем работала",

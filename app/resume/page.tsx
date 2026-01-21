@@ -117,21 +117,26 @@ const Resume = () => {
           <section id="about">
             <Typography as="h3" size="title2" family="mak" className="text-brown font-bold mb-5">Обо мне</Typography>
             <p>
-              Привет, меня зовут Арина, я занимаюсь UI/UX-дизайном, созданием интерфейсов и графики <strong>более 3-х лет</strong>.
+              Привет, меня зовут Арина, я занимаюсь UI/UX-дизайном, созданием интерфейсов и графики <strong>более 4-х лет</strong>.
             </p>
             <p>
               Люблю чистоту и организованность (как в проекте, так и в макетах), обоснованность решений
               и эстетичность не в ущерб удобству. Практикую простой дизайн сложных продуктов и консистентные дизайн-решения.
               Ориентируюсь на понятность, удобство, доступность и аккуратность.
             </p>
-            {/* <Card className="bg-beige mt-6">
+            <Card className="bg-beige mt-6">
               <div className="flex items-baseline gap-3">
                 <span>👋</span>
                 <span>
                   <strong>Ищу работу</strong>, рассматриваю удалённый или гибридный формат.
                 </span>
               </div>
-            </Card> */}
+            </Card>
+            <TypographyLink href="/#portfolio">
+              <Card className="mt-4 group bg-beige p-6 flex items-center justify-center self-start">
+                Портфолио&nbsp;<span className="group-hover:translate-x-1 transition-transform">→</span>
+              </Card>
+            </TypographyLink>
           </section>
           <section id="experience">
             <Typography size="title2" family="mak" className="text-brown font-bold">
@@ -258,11 +263,6 @@ const Resume = () => {
               </div>
             )}
           </section>
-          <TypographyLink href="/#portfolio">
-            <Card className="group bg-beige p-6 flex items-center justify-center self-start">
-              Портфолио&nbsp;<span className="group-hover:translate-x-1 transition-transform">→</span>
-            </Card>
-          </TypographyLink>
         </main>
       </div>
       <Footer className="mt-[80px]" />
