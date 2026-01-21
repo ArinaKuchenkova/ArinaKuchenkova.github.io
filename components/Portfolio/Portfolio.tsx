@@ -93,11 +93,9 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = memo(({
         </div>
         {data.links && data.links.length > 0 && <div className='inline-grid auto-cols-max grid-flow-row gap-2 mt-6'>
           {data.links.map(link => 
-            <Button key={link?.id} asChild variant={"outlined"} className="flex justify-between group min-w-[200px] font-normal">
-              <Link href={link?.url || '#'} target="_blank" rel="noopener noreferrer">
-                <span className="">{link?.label}</span>
-                <span className="group-hover:translate-x-[6px] transition-transform ml-3">→</span>
-              </Link>
+            <Button key={link?.id} as={Link} href={link?.url || '#'} target="_blank" rel="noopener noreferrer" variant={"outlined"} className="flex justify-between group min-w-[200px] font-normal">
+              <span className="">{link?.label}</span>
+              <span className="group-hover:translate-x-[6px] transition-transform ml-3">→</span>
             </Button>
           )}
         </div>}

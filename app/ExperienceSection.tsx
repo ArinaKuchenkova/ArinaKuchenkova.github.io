@@ -58,10 +58,8 @@ export const ExperienceSection = () =>
             </Typography>
           </div>
         </div>
-        <Button variant={"link"} asChild className="mt-5 self-center">
-          <Link href="/resume">
-            Подробнее в Резюме →
-          </Link>
+        <Button variant={"link"} as={Link} href="/resume" className="mt-5 self-center">
+          Подробнее в Резюме →
         </Button>
       </div>
     </div>

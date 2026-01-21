@@ -78,15 +78,11 @@ export const PromoSection = () => {
         Кученкова Арина
       </Typography>
       <div className="col-start-1 col-end-13 rounded-full h-full md:ring-1 ring-peach flex items-center justify-center gap-8">
-        <Button asChild>
-          <Link href="/#portfolio">
-            Портфолио
-          </Link>
+        <Button as={Link} href="#portfolio">
+          Портфолио
         </Button>
-        <Button variant="link" asChild>
-          <Link href="/resume">
-            Резюме →
-          </Link>
+        <Button variant="link" as={Link} href="/resume">
+          Резюме →
         </Button>
       </div>
     </div>

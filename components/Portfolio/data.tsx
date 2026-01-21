@@ -442,7 +442,7 @@ export const data = [
       <p>На этой странице представлены примеры векторных иллюстраций, бэкграундов и паттернов, выполненных в программе Adobe Illustrator. Больше моих работ можно найти в профиле на Dribbble.</p>
     </>,
     implementation: <>
-      <Button asChild variant={"outlined"} className="flex justify-between group min-w-[200px] font-normal">
+      <Button variant={"outlined"} className="flex justify-between group min-w-[200px] font-normal">
         <Link href="https://dribbble.com/arina_art" target="_blank">
           <span className="">Dribbble</span>
           <span className="group-hover:translate-x-[6px] transition-transform">→</span>
