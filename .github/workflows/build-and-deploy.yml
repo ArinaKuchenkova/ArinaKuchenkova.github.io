@@ -5,7 +5,8 @@ on:
     branches: ["main"]
   pull_request:
     branches: ["main"]
-
+  workflow_dispatch:
+    branches: ["main"]
 permissions:
   contents: write
 
@@ -23,7 +24,7 @@ jobs:
           # Version Spec of the version to use in SemVer notation.
           # It also emits such aliases as lts, latest, nightly and canary builds
           # Examples: 12.x, 10.15.1, >=10.15.0, lts/Hydrogen, 16-nightly, latest, node
-          node-version: "18.x"
+          node-version: "20.x"
 
       - name: Install deps
         run: npm ci
