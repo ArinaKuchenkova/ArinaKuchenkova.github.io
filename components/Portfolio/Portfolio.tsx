@@ -64,9 +64,7 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = memo(({
 
   useChain([transApi], [open ? 0.1 : 0])
 
-  console.log(data.content)
-
-  return <div className="w-screen h-screen overflow-y-auto pb-5 sm:pb-10 relative pt-5 sm:pt-20">
+  return <div className="w-screen h-dvh overflow-y-auto pb-5 sm:pb-10 relative pt-5 sm:pt-20">
     <Button
       onClick={onClose}
       variant="ghost"
