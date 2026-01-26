@@ -28,7 +28,7 @@ export const PromoSection = () => {
           height: 'calc(100% + 2px)',
         }}
         className="-mr-1 md:-mr-5 col-start-1 col-end-7 md:col-end-4 h-full flex items-center text-title-promo text-brown font-bold font-mak rounded-r-full border border-peach border-l-0">
-        UI / UX
+        UX / UI
       </Typography>
       <animated.div
         style={{
