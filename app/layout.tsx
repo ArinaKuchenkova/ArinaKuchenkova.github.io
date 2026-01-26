@@ -50,7 +50,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!), 
   title: "Кученкова Арина",
-  description: "UI/UX Дизайнер",
+  description: "UX/UI Дизайнер",
   keywords: [
     "UX/UI дизайнер",
     "UX designer",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     title: 'Кученкова Арина',
-    description: "UI/UX Дизайнер",
+    description: "UX/UI Дизайнер",
     url: "https://arina.pw",
   }
 };
