@@ -73,7 +73,7 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = memo(({
     >
       <IconClose />
     </Button>
-    <Typography as='h1' className={cn('container text-title2 text-brown font-bold text-center pt-5 sm:pt-0 mb-5 sm:mb-9 transition-opacity', {
+    <Typography as='h2' className={cn('container text-title2 text-brown font-bold text-center pt-5 sm:pt-0 mb-5 sm:mb-9 transition-opacity', {
       "opacity-1": open,
       "opacity-0": !open
     })}>

@@ -50,6 +50,22 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Кученкова Арина",
   description: "UI/UX Дизайнер",
+  keywords: [
+    "UX/UI дизайнер",
+    "UX designer",
+    "UI designer",
+    "product design",
+    "web design",
+    "portfolio"
+  ],
+  authors: [{ name: "Кученкова Арина" }],
+  creator: "Кученкова Арина",
+  openGraph: {
+    type: "website",
+    title: 'Кученкова Арина',
+    description: "UI/UX Дизайнер",
+    url: "https://arina.pw",
+  }
 };
 
 export default function RootLayout({

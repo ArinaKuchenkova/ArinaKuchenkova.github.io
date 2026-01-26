@@ -70,7 +70,7 @@ export const PromoSection = () => {
         <PhotoshopLogo className="size-[50px] md:size-[100px]" />
       </animated.div>
       <Typography
-        as="div"
+        as="h1"
         style={{
           height: 'calc(100% + 2px)',
         }}
