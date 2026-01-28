@@ -273,6 +273,13 @@ const Resume = () => {
 export const metadata: Metadata = {
   title: "Кученкова Арина - резюме",
   description: "UX/UI Дизайнер",
+  openGraph: {
+    type: "website",
+    title: 'Кученкова Арина',
+    description: "UX/UI Дизайнер",
+    url: '/resume',
+    images: '/opengraph-image.png',
+  }
 };
 
 export default Resume

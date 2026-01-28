@@ -13,8 +13,8 @@ import FsLightbox from 'fslightbox-react';
 import type { PortfolioItem as PortfolioItemType } from '@/types/strapi';
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import { GalleryGridType } from '@/graphql/generated';
-import { NEXT_PUBLIC_IMAGES_PREFIX, NEXT_PUBLIC_STRAPI_URL } from '@/lib/env';
 import Link from 'next/link';
+import { getStrapiImageUrl } from '@/lib/getStrapiImageUrl';
 
 type PortfolioModalProps = {
   open?: boolean;
@@ -87,7 +87,7 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = memo(({
               key={image?.url}
               className="aspect-square bg-white rounded-lg border border-beige"
               style={style}
-              src={`${NEXT_PUBLIC_IMAGES_PREFIX}${image!.url}`}
+              src={getStrapiImageUrl(image!.url)}
             />
           ))}
         </div>
@@ -118,7 +118,7 @@ const PortfolioModalContent: React.FC<PortfolioModalProps> = memo(({
                 )
               }
               case 'ComponentProjectGallery': {
-                return <Gallery gridType={content.layout!} images={content.images?.map(i => `${NEXT_PUBLIC_IMAGES_PREFIX}${i!.url}`) || []} />
+                return <Gallery gridType={content.layout!} images={content.images?.map(i => getStrapiImageUrl(i!.url)) || []} />
               }
               default: {
                 return null
@@ -290,7 +290,7 @@ const PortfolioItem: React.FC<PortfolioItemType> = (data) => {
     const gallery = data?.content?.find(i => i?.__typename === 'ComponentProjectGallery');
     // @ts-ignore
     gallery?.images?.slice(0, 4).forEach(image => {
-      preloadImage(`${NEXT_PUBLIC_IMAGES_PREFIX}${image?.url}`);
+      preloadImage(getStrapiImageUrl(image?.url));
     });
   };
 
@@ -313,7 +313,7 @@ const PortfolioItem: React.FC<PortfolioItemType> = (data) => {
           {springs.map((style, index) => (
             <animated.img
               key={data.previewImages?.[index]?.url}
-              src={`${NEXT_PUBLIC_IMAGES_PREFIX}${data.previewImages?.[index]?.url}`}
+              src={getStrapiImageUrl(data.previewImages?.[index]?.url)}
               style={style}
               className="size-16 rounded-lg"
               alt={`Preview image #${index + 1} for ${data.title}`}

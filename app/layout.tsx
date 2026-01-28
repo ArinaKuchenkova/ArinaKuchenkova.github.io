@@ -65,7 +65,8 @@ export const metadata: Metadata = {
     type: "website",
     title: 'Кученкова Арина',
     description: "UX/UI Дизайнер",
-    url: "https://arina.pw",
+    url: "/",
+    images: '/opengraph-image.png'
   }
 };
 
