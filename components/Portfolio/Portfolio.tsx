@@ -169,7 +169,14 @@ const getImageSrc = (src: string) => {
 };
 
 
-const PortfolioItem: React.FC<PortfolioItemType> = (data) => {
+type PortfolioItemProps = PortfolioItemType & {
+  shouldOpen?: boolean;
+  skipAnimation?: boolean;
+  onProjectOpen?: (slug: string) => void;
+  onProjectClose?: () => void;
+}
+
+const PortfolioItem: React.FC<PortfolioItemProps> = ({ shouldOpen, skipAnimation, onProjectOpen, onProjectClose, ...data }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const isHover = useHover(ref);
   const transApi = useSpringRef()
@@ -242,7 +249,8 @@ const PortfolioItem: React.FC<PortfolioItemType> = (data) => {
         } as any)
       },
     })
-  }, [api, ref])
+    onProjectOpen?.(data.slug!);
+  }, [api, ref, onProjectOpen, data.slug])
 
   const handleCloseModal = useCallback(async () => {
     if (!ref.current) {
@@ -279,7 +287,38 @@ const PortfolioItem: React.FC<PortfolioItemType> = (data) => {
         })
       },
     })
-  }, [api, ref])
+    onProjectClose?.();
+  }, [api, ref, onProjectClose])
+
+  // External open/close driven by URL
+  useEffect(() => {
+    if (shouldOpen && !open) {
+      if (skipAnimation) {
+        // Scroll to this item so it's visible when the modal closes
+        ref.current?.scrollIntoView({ block: 'center', behavior: 'instant' });
+        // Instant open (URL-driven, no animation)
+        lock();
+        setOpen(true);
+        api.set({
+          opacity: 1,
+          background: 'var(--color-background)',
+          display: 'block',
+          left: 0,
+          top: 0,
+          height: '100vh',
+          width: '100vw',
+        } as any);
+      } else {
+        // Triggered by popstate forward — use animation
+        handleOpenModal();
+      }
+    } else if (!shouldOpen && open) {
+      // Close instantly (popstate back)
+      unlock();
+      setOpen(false);
+      api.set({ display: 'none' });
+    }
+  }, [shouldOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const preloadedRef = useRef(false);
 
@@ -325,12 +364,24 @@ const PortfolioItem: React.FC<PortfolioItemType> = (data) => {
   </>
 }
 
-export const Portfolio: React.FC<{ data: PortfolioItemType[] }> = ({ data }) => {
+type PortfolioProps = {
+  data: PortfolioItemType[];
+  openSlug: string | null;
+  isFromUrl: React.RefObject<boolean>;
+  onProjectOpen: (slug: string) => void;
+  onProjectClose: () => void;
+}
+
+export const Portfolio: React.FC<PortfolioProps> = ({ data, openSlug, isFromUrl, onProjectOpen, onProjectClose }) => {
   return <div className='mt-10'>
     {data.map((item, index) =>
       <PortfolioItem
         key={index}
         {...item}
+        shouldOpen={item.slug === openSlug}
+        skipAnimation={item.slug === openSlug && !!isFromUrl.current}
+        onProjectOpen={onProjectOpen}
+        onProjectClose={onProjectClose}
       />
     )}
   </div>
